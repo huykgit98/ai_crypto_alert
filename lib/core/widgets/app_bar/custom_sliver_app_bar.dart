@@ -1,0 +1,47 @@
+import 'package:flutter/material.dart';
+import 'package:moon_design/moon_design.dart';
+
+class CustomSliverAppBar extends StatelessWidget {
+  const CustomSliverAppBar({
+    super.key,
+    this.title,
+    this.trailing,
+    this.leading,
+    this.gradient,
+    this.padding = EdgeInsets.zero,
+    this.pinned = true,
+  });
+
+  final Widget? title;
+  final Widget? trailing;
+  final Widget? leading;
+  final List<Color>? gradient;
+  final EdgeInsetsGeometry padding;
+  final bool pinned;
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverAppBar(
+      pinned: pinned,
+      flexibleSpace: FlexibleSpaceBar(
+        centerTitle: true,
+        title: title,
+        background: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: gradient ??
+                  [
+                    context.moonColors!.jiren.withOpacity(0.95),
+                    context.moonColors!.roshi.withOpacity(0.9),
+                  ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+        ),
+      ),
+      leading: leading,
+      actions: [if (trailing != null) trailing!],
+    );
+  }
+}
