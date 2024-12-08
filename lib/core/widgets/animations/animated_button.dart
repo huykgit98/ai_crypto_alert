@@ -34,16 +34,17 @@ class AnimatedButton extends StatelessWidget {
               onTap: onTap,
               label: Text(
                 label,
-                style: TextStyle(color: context.moonColors!.goku),
+                style: TextStyle(color: context.moonColors!.goten),
               ),
               gradientColors: gradientColors,
               isFullWidth: true,
             )
           : MoonOutlinedButton(
               buttonSize: MoonButtonSize.lg,
-              borderColor: borderColor ?? context.moonColors!.bulma,
+              // borderColor: borderColor ?? context.moonColors!.zeno,
               borderRadius: BorderRadius.circular(16),
               onTap: onTap,
+
               label: Text(
                 label,
                 style: TextStyle(color: context.moonColors!.bulma),

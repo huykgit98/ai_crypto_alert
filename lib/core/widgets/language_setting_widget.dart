@@ -55,14 +55,22 @@ class _LanguageSettingSheetState extends ConsumerState<LanguageSettingSheet>
       }
     }
 
-    return Column(
-      children: [
-        BottomSheetHeader(
-          title: 'Select language'.hardcoded,
-          onClose: () => Navigator.of(context).pop(),
+    return Container(
+      decoration: BoxDecoration(
+        color: context.moonColors!.gohan,
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(16),
         ),
-        _buildLanguageOptions(context, ref, language),
-      ],
+      ),
+      child: Column(
+        children: [
+          BottomSheetHeader(
+            title: context.l10n.languageSettingTitle,
+            onClose: () => Navigator.of(context).pop(),
+          ),
+          _buildLanguageOptions(context, ref, language),
+        ],
+      ),
     );
   }
 
@@ -88,6 +96,9 @@ class _LanguageSettingSheetState extends ConsumerState<LanguageSettingSheet>
                 _getLanguageTitle(context, code),
                 style: context.moonTypography?.heading.text14.copyWith(
                   fontWeight: FontWeight.w500,
+                  color: language.value?.languageCode == code.name
+                      ? context.moonColors?.textPrimary
+                      : context.moonColors?.textSecondary,
                 ),
               ),
               trailing: SizedBox(

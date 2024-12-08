@@ -9,7 +9,6 @@ class PrimaryButton extends StatelessWidget {
     this.gradientColors,
     this.buttonSize = MoonButtonSize.lg,
     this.isFullWidth = false,
-    this.showPulseEffect = false,
     this.fixedWidth,
   });
   final Widget label;
@@ -17,7 +16,6 @@ class PrimaryButton extends StatelessWidget {
   final List<Color>? gradientColors;
   final MoonButtonSize buttonSize;
   final bool isFullWidth;
-  final bool showPulseEffect;
   final double? fixedWidth;
   @override
   Widget build(BuildContext context) {
@@ -27,13 +25,12 @@ class PrimaryButton extends StatelessWidget {
       width: fixedWidth,
       onTap: onTap,
       label: label,
-      showPulseEffect: showPulseEffect,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: gradientColors ??
               [
-                context.moonColors?.jiren ?? Colors.green,
-                context.moonColors?.bulma ?? Colors.green,
+                context.moonColors!.frieza60,
+                context.moonColors!.jiren,
               ],
         ),
         borderRadius:

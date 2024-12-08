@@ -19,9 +19,9 @@ class BottomSheetHeader extends StatelessWidget {
           height: 4,
           width: 40,
           margin: const EdgeInsets.only(top: Sizes.p8),
-          decoration: ShapeDecoration(
+          decoration: BoxDecoration(
             color: context.moonColors!.textSecondary,
-            shape: const StadiumBorder(),
+            borderRadius: BorderRadius.circular(20),
           ),
         ),
         Stack(
@@ -49,7 +49,7 @@ class BottomSheetHeader extends StatelessWidget {
             ),
           ],
         ),
-        Divider(height: 0, color: context.moonColors!.textSecondary),
+        Divider(height: 0, color: context.moonColors!.beerus),
       ],
     );
   }

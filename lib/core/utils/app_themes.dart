@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:moon_design/moon_design.dart';
 
 extension BuildContextX on BuildContext {
@@ -12,32 +13,38 @@ extension BuildContextX on BuildContext {
 // Light Theme
 final lightTokens = MoonTokens.light.copyWith(
   typography: MoonTypography.typography.copyWith(
-    heading: MoonTypography.typography.heading.apply(fontFamily: "Roboto"),
-    body: MoonTypography.typography.body.apply(fontFamily: "Roboto"),
+    heading: MoonTypography.typography.heading.apply(fontFamily: "Inter"),
+    body: MoonTypography.typography.body.apply(fontFamily: "Inter"),
   ),
 );
 
 final lightTheme = ThemeData.light().copyWith(
+  scaffoldBackgroundColor: const Color(0xFFF6F7F9), // Gohan light.
   splashColor: Colors.transparent,
   highlightColor: Colors.transparent,
   hoverColor: Colors.transparent,
   splashFactory: NoSplash.splashFactory,
-  // colorScheme: ColorScheme.fromSeed(
-  //   seedColor: Colors.green,
-  // ),
+  textTheme: GoogleFonts.interTextTheme(), // Apply Inter font globally
   extensions: <ThemeExtension<dynamic>>[
-    MoonTheme(tokens: lightTokens).copyWith(
-      accordionTheme: MoonAccordionTheme(tokens: lightTokens).copyWith(
-        colors: MoonAccordionTheme(tokens: lightTokens).colors.copyWith(
-              backgroundColor: Colors.white,
-            ),
+    MoonTheme(
+      tokens: MoonTokens.light.copyWith(
+        colors: mdsLightColors,
+        typography: MoonTypography.typography.copyWith(
+          heading: MoonTypography.typography.heading.apply(
+            fontFamily: "Inter",
+            fontWeightDelta: -1,
+            fontVariations: [const FontVariation('wght', 500)],
+          ),
+          body: MoonTypography.typography.body.apply(
+            fontFamily: "Inter",
+          ),
+        ),
       ),
-      // toastTheme: MoonToastTheme(tokens: darkTokens).copyWith(
-      //   colors: MoonToastTheme(tokens: darkTokens).colors.copyWith(
-      //         darkVariantBackgroundColor: Colors.black.withOpacity(0.8),
-      //         darkVariantTextColor: Colors.white,
-      //         darkVariantIconColor: Colors.white,
-      //       ),
+      // effects: MoonEffectsTheme(
+      //   tokens: lightTokens,
+      //   controlHoverEffect: MoonEffectsTheme(tokens: lightTokens)
+      //       .controlHoverEffect
+      //       .copyWith(primaryHoverColor: Colors.white.withOpacity(0.3)),
       // ),
     ),
   ],
@@ -46,33 +53,42 @@ final lightTheme = ThemeData.light().copyWith(
 // Dark Theme
 final darkTokens = MoonTokens.dark.copyWith(
   typography: MoonTypography.typography.copyWith(
-    heading: MoonTypography.typography.heading.apply(fontFamily: "Roboto"),
-    body: MoonTypography.typography.body.apply(fontFamily: "Roboto"),
+    heading: MoonTypography.typography.heading.apply(fontFamily: "Inter"),
+    body: MoonTypography.typography.body.apply(fontFamily: "Inter"),
   ),
 );
 
 final darkTheme = ThemeData.dark().copyWith(
+  scaffoldBackgroundColor: const Color(0xFF1F1F1F), // Gohan dark.
   splashColor: Colors.transparent,
   highlightColor: Colors.transparent,
+
   hoverColor: Colors.transparent,
   splashFactory: NoSplash.splashFactory,
-  // colorScheme: ColorScheme.fromSeed(
-  //   seedColor: Colors.green,
-  //   brightness: Brightness.dark,
-  // ),
+  textTheme: GoogleFonts.interTextTheme().apply(
+    bodyColor: Colors.white, // Apply white text color for body
+    displayColor: Colors.white, // Apply white text color for headings
+  ),
   extensions: <ThemeExtension<dynamic>>[
-    MoonTheme(tokens: darkTokens).copyWith(
-      accordionTheme: MoonAccordionTheme(tokens: darkTokens).copyWith(
-        colors: MoonAccordionTheme(tokens: darkTokens).colors.copyWith(
-              backgroundColor: Colors.black,
-            ),
+    MoonTheme(
+      tokens: MoonTokens.dark.copyWith(
+        colors: mdsDarkColors,
+        typography: MoonTypography.typography.copyWith(
+          heading: MoonTypography.typography.heading.apply(
+            fontFamily: "Inter",
+            fontWeightDelta: -1,
+            fontVariations: [const FontVariation('wght', 500)],
+          ),
+          body: MoonTypography.typography.body.apply(
+            fontFamily: "Inter",
+          ),
+        ),
       ),
-      // toastTheme: MoonToastTheme(tokens: darkTokens).copyWith(
-      //   colors: MoonToastTheme(tokens: darkTokens).colors.copyWith(
-      //         darkVariantBackgroundColor: Colors.black.withOpacity(0.8),
-      //         darkVariantTextColor: Colors.white,
-      //         darkVariantIconColor: Colors.white,
-      //       ),
+      // effects: MoonEffectsTheme(
+      //   tokens: lightTokens,
+      //   controlHoverEffect: MoonEffectsTheme(tokens: lightTokens)
+      //       .controlHoverEffect
+      //       .copyWith(primaryHoverColor: Colors.white.withOpacity(0.3)),
       // ),
     ),
   ],

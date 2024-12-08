@@ -7,11 +7,12 @@ class TextDivider extends StatelessWidget {
     required this.text,
     this.paddingTop = 48,
     this.paddingBottom = 32,
-    this.gradientColors = const [Color(0xFF8FFF00), Color(0xFF475A06)],
+    this.gradientColors = const [Color(0xFF952DCA), Color(0xFFC78FED)],
     super.key,
   });
 
   final String text;
+
   final double paddingTop;
 
   final double paddingBottom;

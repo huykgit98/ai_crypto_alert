@@ -51,16 +51,24 @@ class _ThemeSettingSheetState extends ConsumerState<ThemeSettingSheet>
       }
     }
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        BottomSheetHeader(
-          title: context.l10n.darkMode,
-          onClose: () => Navigator.of(context).pop(),
+    return Container(
+      decoration: BoxDecoration(
+        color: context.moonColors!.gohan,
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(16),
         ),
-        ...ThemeMode.values.reversed
-            .map((mode) => _buildThemeModeOption(context, ref, theme, mode)),
-      ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          BottomSheetHeader(
+            title: context.l10n.darkMode,
+            onClose: () => Navigator.of(context).pop(),
+          ),
+          ...ThemeMode.values.reversed
+              .map((mode) => _buildThemeModeOption(context, ref, theme, mode)),
+        ],
+      ),
     );
   }
 
@@ -90,7 +98,15 @@ class _ThemeSettingSheetState extends ConsumerState<ThemeSettingSheet>
         _setNewTheme(ref, theme.value, mode);
       },
       hoverEffectColor: Colors.red,
-      label: Text(title),
+      label: Text(
+        title,
+        style: context.moonTypography?.body.text14.copyWith(
+          fontWeight: FontWeight.w500,
+          color: theme.value == mode
+              ? context.moonColors?.textPrimary
+              : context.moonColors?.textSecondary,
+        ),
+      ),
       content: subtitle != null ? Text(subtitle) : null,
       trailing: SizedBox(
         width: 32,

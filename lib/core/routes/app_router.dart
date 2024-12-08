@@ -1,4 +1,5 @@
 import 'package:ai_crypto_alert/core/routes/routes.dart';
+import 'package:ai_crypto_alert/features/authentication/authentication.dart';
 import 'package:ai_crypto_alert/features/home/home.dart';
 import 'package:ai_crypto_alert/features/onboarding/onboarding.dart';
 import 'package:ai_crypto_alert/features/settings/settings.dart';
@@ -93,8 +94,8 @@ GoRouter goRouter(Ref ref) {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Color(0xFFe7fc83),
-                    Color(0xFFE3FAD5),
+                    Colors.black,
+                    Colors.white,
                   ],
                 ),
               ),
@@ -116,39 +117,39 @@ GoRouter goRouter(Ref ref) {
           );
         },
       ),
-      // GoRoute(
-      //   path: '/signIn',
-      //   name: AppRoute.signIn.name,
-      //   pageBuilder: (BuildContext context, GoRouterState state) {
-      //     return CustomTransitionPage<void>(
-      //       key: state.pageKey,
-      //       child: const CustomSignInScreen(),
-      //       transitionsBuilder: _defaultTransitionsBuilder,
-      //     );
-      //   },
-      //   routes: [
-      //     GoRoute(
-      //       path: 'forgotPassword',
-      //       name: AppRoute.forgotPassword.name,
-      //       pageBuilder: (context, state) {
-      //         return const MaterialPage(
-      //           child: ForgotPasswordScreen(),
-      //         );
-      //       },
-      //     ),
-      //   ],
-      // ),
-      // GoRoute(
-      //   path: '/signUp',
-      //   name: AppRoute.signUp.name,
-      //   pageBuilder: (BuildContext context, GoRouterState state) {
-      //     return CustomTransitionPage<void>(
-      //       key: state.pageKey,
-      //       child: const CustomSignUpScreen(),
-      //       transitionsBuilder: _defaultTransitionsBuilder,
-      //     );
-      //   },
-      // ),
+      GoRoute(
+        path: '/signIn',
+        name: AppRoute.signIn.name,
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return CustomTransitionPage<void>(
+            key: state.pageKey,
+            child: const CustomSignInScreen(),
+            transitionsBuilder: _defaultTransitionsBuilder,
+          );
+        },
+        routes: [
+          GoRoute(
+            path: 'forgotPassword',
+            name: AppRoute.forgotPassword.name,
+            pageBuilder: (context, state) {
+              return const MaterialPage(
+                child: ForgotPasswordScreen(),
+              );
+            },
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/signUp',
+        name: AppRoute.signUp.name,
+        pageBuilder: (BuildContext context, GoRouterState state) {
+          return CustomTransitionPage<void>(
+            key: state.pageKey,
+            child: const CustomSignUpScreen(),
+            transitionsBuilder: _defaultTransitionsBuilder,
+          );
+        },
+      ),
       StatefulShellRoute.indexedStack(
         pageBuilder: (context, state, navigationShell) => NoTransitionPage(
           child: ScaffoldWithNestedNavigation(navigationShell: navigationShell),

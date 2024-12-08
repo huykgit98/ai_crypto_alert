@@ -24,7 +24,7 @@ class AuthPrompt extends StatelessWidget {
         Text(
           promptText,
           style: TextStyle(
-            color: context.moonColors?.textPrimary,
+            color: context.moonColors?.textSecondary,
           ),
         ),
         gapW8,
@@ -37,7 +37,7 @@ class AuthPrompt extends StatelessWidget {
           child: Text(
             actionText,
             style: context.moonTypography!.heading.textDefault.copyWith(
-              color: context.moonColors?.piccolo,
+              color: context.moonColors?.textPrimary,
               fontWeight: FontWeight.bold,
             ),
           ),
