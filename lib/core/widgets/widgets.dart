@@ -1,6 +1,7 @@
 export 'adaptive_date_picker.dart';
 export 'adaptive_dropdown.dart';
 export 'alert_notification.dart';
+export 'animations/animated_check.dart';
 export 'animations/animations.dart';
 export 'app_bar/custom_sliver_app_bar.dart';
 export 'bottom_sheet/bottom_sheet.dart';

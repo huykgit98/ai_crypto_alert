@@ -7,23 +7,62 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moon_design/moon_design.dart';
 
-class LanguageSettingSheet extends ConsumerWidget {
+class LanguageSettingSheet extends ConsumerStatefulWidget {
   const LanguageSettingSheet({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<LanguageSettingSheet> createState() =>
+      _LanguageSettingSheetState();
+}
+
+class _LanguageSettingSheetState extends ConsumerState<LanguageSettingSheet>
+    with TickerProviderStateMixin {
+  final Map<LanguageCode, AnimationController> _animationControllers = {};
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize AnimationControllers for each LanguageCode
+    for (final code in LanguageCode.values) {
+      _animationControllers[code] = AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 200),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    // Dispose all AnimationControllers
+    for (final controller in _animationControllers.values) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final language = ref.watch(languageProvider);
 
-    return MeshGradientBackground(
-      child: Column(
-        children: [
-          BottomSheetHeader(
-            title: 'Select language'.hardcoded,
-            onClose: () => Navigator.of(context).pop(),
-          ),
-          _buildLanguageOptions(context, ref, language),
-        ],
-      ),
+    // Start animation for the selected language
+    if (language.value != null) {
+      for (final code in LanguageCode.values) {
+        if (language.value!.languageCode == code.name) {
+          _animationControllers[code]?.forward();
+        } else {
+          _animationControllers[code]?.reset();
+        }
+      }
+    }
+
+    return Column(
+      children: [
+        BottomSheetHeader(
+          title: 'Select language'.hardcoded,
+          onClose: () => Navigator.of(context).pop(),
+        ),
+        _buildLanguageOptions(context, ref, language),
+      ],
     );
   }
 
@@ -45,15 +84,20 @@ class LanguageSettingSheet extends ConsumerWidget {
                   code.name,
                 );
               },
-              label: Text(_getLanguageTitle(context, code)),
-              leading: MoonRadio<LanguageCode>(
-                value: code,
-                groupValue: language.value != null
-                    ? LanguageCode.values.firstWhere(
-                        (e) => e.name == language.value?.languageCode,
-                      )
-                    : null,
-                onChanged: (LanguageCode? value) {},
+              label: Text(
+                _getLanguageTitle(context, code),
+                style: context.moonTypography?.heading.text14.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              trailing: SizedBox(
+                width: 32,
+                height: 32,
+                child: AnimatedCheck(
+                  progress: _animationControllers[code]!,
+                  size: 32,
+                  color: context.moonColors?.roshi,
+                ),
               ),
             ),
           )

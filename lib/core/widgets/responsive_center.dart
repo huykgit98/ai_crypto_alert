@@ -13,6 +13,7 @@ class ResponsiveCenter extends StatelessWidget {
     this.maxContentWidth = Breakpoint.desktop,
     this.padding = EdgeInsets.zero,
   });
+
   final double maxContentWidth;
   final EdgeInsetsGeometry padding;
   final Widget child;

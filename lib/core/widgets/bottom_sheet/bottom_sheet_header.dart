@@ -41,7 +41,7 @@ class BottomSheetHeader extends StatelessWidget {
                 child: MoonButton.icon(
                   icon: const Icon(MoonIcons.controls_close_small_16_light),
                   buttonSize: MoonButtonSize.sm,
-                  backgroundColor: context.moonColors!.beerus,
+                  backgroundColor: Colors.transparent,
                   borderRadius: BorderRadius.circular(24),
                   onTap: onClose,
                 ),

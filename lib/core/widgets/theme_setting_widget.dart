@@ -6,45 +6,81 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moon_design/moon_design.dart';
 
-class ThemeSettingSheet extends ConsumerWidget {
+class ThemeSettingSheet extends ConsumerStatefulWidget {
   const ThemeSettingSheet({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return MeshGradientBackground(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          BottomSheetHeader(
-            title: context.l10n.darkMode,
-            onClose: () => Navigator.of(context).pop(),
-          ),
-          ...ThemeMode.values.reversed
-              .map((mode) => _buildThemeModeOption(context, ref, mode)),
-        ],
-      ),
+  ConsumerState<ThemeSettingSheet> createState() => _ThemeSettingSheetState();
+}
+
+class _ThemeSettingSheetState extends ConsumerState<ThemeSettingSheet>
+    with TickerProviderStateMixin {
+  final Map<ThemeMode, AnimationController> _animationControllers = {};
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize AnimationControllers for each ThemeMode
+    for (final mode in ThemeMode.values) {
+      _animationControllers[mode] = AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 200),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    // Dispose all AnimationControllers
+    for (final controller in _animationControllers.values) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = ref.watch(customThemeProvider);
+
+    // Start animation for the selected theme
+    for (final mode in ThemeMode.values) {
+      if (theme.value == mode) {
+        _animationControllers[mode]?.forward();
+      } else {
+        _animationControllers[mode]?.reset();
+      }
+    }
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        BottomSheetHeader(
+          title: context.l10n.darkMode,
+          onClose: () => Navigator.of(context).pop(),
+        ),
+        ...ThemeMode.values.reversed
+            .map((mode) => _buildThemeModeOption(context, ref, theme, mode)),
+      ],
     );
   }
 
   Widget _buildThemeModeOption(
     BuildContext context,
     WidgetRef ref,
+    AsyncValue<ThemeMode?> theme,
     ThemeMode mode,
   ) {
-    final theme = ref.watch(customThemeProvider);
     String title;
     String? subtitle;
+
     switch (mode) {
       case ThemeMode.dark:
         title = context.l10n.on;
-        break;
       case ThemeMode.light:
         title = context.l10n.off;
-        break;
       case ThemeMode.system:
         title = context.l10n.system;
         subtitle = context.l10n.systemSubtitle;
-        break;
     }
 
     return MoonMenuItem(
@@ -53,16 +89,17 @@ class ThemeSettingSheet extends ConsumerWidget {
         VibrationUtil.vibrate(context);
         _setNewTheme(ref, theme.value, mode);
       },
+      hoverEffectColor: Colors.red,
       label: Text(title),
       content: subtitle != null ? Text(subtitle) : null,
-      leading: MoonRadio<ThemeMode>(
-        value: mode,
-        groupValue: theme.value,
-        onChanged: (ThemeMode? value) {
-          if (value != null) {
-            _setNewTheme(ref, theme.value, value);
-          }
-        },
+      trailing: SizedBox(
+        width: 32,
+        height: 32,
+        child: AnimatedCheck(
+          progress: _animationControllers[mode]!,
+          size: 32,
+          color: context.moonColors?.roshi,
+        ),
       ),
     );
   }
