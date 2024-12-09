@@ -133,7 +133,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
   }
 
   Widget _buildForm(BuildContext context) {
-    final errorColor = colorTable(context)[40];
+    final errorColor = context.moonColors?.chichi60;
 
     return Padding(
       padding: const EdgeInsets.all(Sizes.p16),
@@ -163,7 +163,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
       MoonFormTextInput(
         textInputSize: MoonTextInputSize.lg,
         controller: _textController,
-        errorColor: colorTable(context)[40],
+        errorColor: context.moonColors?.chichi60,
         borderRadius: BorderRadius.circular(16),
         hintText: context.l10n.signInWithEmailHintText,
         validator: (String? value) => EmailValidator.validate(value)

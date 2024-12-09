@@ -1,5 +1,5 @@
+import 'package:ai_crypto_alert/core/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:moon_design/moon_design.dart';
 
 class MeshRadialGradientBackground extends StatelessWidget {
   const MeshRadialGradientBackground({
@@ -15,53 +15,22 @@ class MeshRadialGradientBackground extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-            gradient: RadialGradient(
-              radius: 0.9,
-              center: Alignment.topLeft,
-              colors: [
-                context.moonColors!.dodoria10,
-                context.moonColors!.dodoria10,
-                context.moonColors!.dodoria10,
-                context.moonColors!.goku.withOpacity(0),
-              ],
-            ),
+            gradient: context.topLeftRadialGradient,
           ),
         ),
         Container(
           decoration: BoxDecoration(
-            gradient: RadialGradient(
-              radius: 0.8,
-              center: Alignment.bottomRight,
-              colors: [
-                context.moonColors!.frieza60,
-                context.moonColors!.goku.withOpacity(0),
-              ],
-            ),
+            gradient: context.bottomRightRadialGradient,
           ),
         ),
         Container(
           decoration: BoxDecoration(
-            gradient: RadialGradient(
-              radius: 0.8,
-              center: Alignment.topCenter,
-              colors: [
-                context.moonColors!.dodoria10,
-                context.moonColors!.goku.withOpacity(0),
-              ],
-            ),
+            gradient: context.topCenterRadialGradient,
           ),
         ),
         Container(
           decoration: BoxDecoration(
-            gradient: RadialGradient(
-              radius: 0.8,
-              center: Alignment.topRight,
-              colors: [
-                context.moonColors!.cell10,
-                context.moonColors!.cell10,
-                context.moonColors!.goku.withOpacity(0),
-              ],
-            ),
+            gradient: context.topRightRadialGradient, // Using GradientUtils
           ),
         ),
         child,

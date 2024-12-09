@@ -6,7 +6,7 @@ part of 'profile_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$profileRepositoryHash() => r'28b460c3523aa26aa79db5bd271efe5f62268513';
+String _$profileRepositoryHash() => r'4379d7128e304a20122a57ff9f8ae0d70de1cdbc';
 
 /// See also [profileRepository].
 @ProviderFor(profileRepository)
@@ -23,7 +23,7 @@ final profileRepositoryProvider = Provider<ProfileRepository>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef ProfileRepositoryRef = ProviderRef<ProfileRepository>;
-String _$profileFutureHash() => r'11d6084bfa3001029bf073e461984ec6de60e389';
+String _$profileFutureHash() => r'd4510238ded3479ad5b329d9c983e3026874ded6';
 
 /// See also [profileFuture].
 @ProviderFor(profileFuture)

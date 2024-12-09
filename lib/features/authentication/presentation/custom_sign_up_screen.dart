@@ -3,11 +3,9 @@ import 'package:ai_crypto_alert/core/routes/routes.dart';
 import 'package:ai_crypto_alert/core/utils/utils.dart';
 import 'package:ai_crypto_alert/core/widgets/widgets.dart';
 import 'package:ai_crypto_alert/features/authentication/presentation/widgets/widgets.dart';
-import 'package:ai_crypto_alert/gen/assets.gen.dart';
 import 'package:ai_crypto_alert/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:moon_design/moon_design.dart';
 
@@ -105,20 +103,14 @@ class _CustomSignUpState extends ConsumerState<CustomSignUpScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _buildAppBar(context),
+              AuthAppBar(
+                title: context.l10n.signUp,
+                backgroundColor: context.moonColors!.goku,
+              ),
               Container(
                 height: screenHeight - appBarHeight - systemTopPadding,
                 decoration: BoxDecoration(
-                  gradient: RadialGradient(
-                    radius: 0.9,
-                    center: Alignment.topLeft,
-                    colors: [
-                      context.moonColors!.dodoria10,
-                      context.moonColors!.dodoria10,
-                      context.moonColors!.dodoria10,
-                      context.moonColors!.goku.withOpacity(0),
-                    ],
-                  ),
+                  gradient: context.topLeftRadialGradient,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(40),
                     topRight: Radius.circular(40),
@@ -129,7 +121,7 @@ class _CustomSignUpState extends ConsumerState<CustomSignUpScreen> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      _buildLogo(context),
+                      const SignInLogoWidget(),
                       gapH16,
                       _buildForm(context),
                       Expanded(
@@ -150,16 +142,6 @@ class _CustomSignUpState extends ConsumerState<CustomSignUpScreen> {
     );
   }
 
-  Widget _buildLogo(BuildContext context) {
-    return Center(
-      child: SvgPicture.asset(
-        Assets.icons.apple.path,
-        width: 32,
-        height: 32,
-      ),
-    );
-  }
-
   Widget _buildForm(BuildContext context) {
     return Form(
       key: _formKey,
@@ -171,7 +153,7 @@ class _CustomSignUpState extends ConsumerState<CustomSignUpScreen> {
   }
 
   List<Widget> _buildFormChildren(BuildContext context) {
-    final errorColor = colorTable(context)[40];
+    final errorColor = context.moonColors?.chichi60;
 
     return [
       Text(
@@ -299,15 +281,5 @@ class _CustomSignUpState extends ConsumerState<CustomSignUpScreen> {
         },
       ),
     ];
-  }
-
-  AppBar _buildAppBar(BuildContext context) {
-    return AppBar(
-      actions: const [
-        CloseButtonWidget(),
-      ],
-      title: Text(context.l10n.createAnAccount),
-      backgroundColor: context.moonColors?.goku,
-    );
   }
 }

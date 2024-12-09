@@ -47,11 +47,25 @@ class $AssetsIconsGen {
   List<dynamic> get values => [apple, google, usFlag, vnFlag];
 }
 
+class $AssetsLottiesGen {
+  const $AssetsLottiesGen();
+
+  /// File path: assets/lotties/e-robo-waving.lottie
+  String get eRoboWaving => 'assets/lotties/e-robo-waving.lottie';
+
+  /// File path: assets/lotties/e-robo.lottie
+  String get eRobo => 'assets/lotties/e-robo.lottie';
+
+  /// List of all assets
+  List<String> get values => [eRoboWaving, eRobo];
+}
+
 class Assets {
   Assets._();
 
   static const $AssetsEnvsGen envs = $AssetsEnvsGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
+  static const $AssetsLottiesGen lotties = $AssetsLottiesGen();
 }
 
 class AssetGenImage {
