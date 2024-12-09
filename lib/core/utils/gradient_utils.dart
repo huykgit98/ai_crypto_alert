@@ -98,18 +98,19 @@ extension GradientUtils on BuildContext {
         radius: 0.9,
         center: Alignment.topLeft,
         colors: [
-          moonColors!.dodoria10,
-          moonColors!.dodoria10,
-          moonColors!.dodoria10,
+          moonColors!.frieza10,
+          moonColors!.frieza10,
+          moonColors!.frieza10,
           moonColors!.goku.withOpacity(0),
         ],
       );
 
   RadialGradient get bottomRightRadialGradient => RadialGradient(
-        radius: 0.8,
+        radius: 0.9,
         center: Alignment.bottomRight,
         colors: [
-          moonColors!.frieza60,
+          moonColors!.dodoria.withOpacity(.3),
+          moonColors!.dodoria.withOpacity(.1),
           moonColors!.goku.withOpacity(0),
         ],
       );

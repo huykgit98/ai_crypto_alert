@@ -117,7 +117,9 @@ class _CustomSignUpState extends ConsumerState<CustomSignUpScreen> {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(Sizes.p16),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Sizes.p16,
+                  ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
