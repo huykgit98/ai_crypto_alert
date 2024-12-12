@@ -1,8 +1,11 @@
 import 'package:ai_crypto_alert/core/routes/routes.dart';
 import 'package:ai_crypto_alert/features/authentication/authentication.dart';
+import 'package:ai_crypto_alert/features/budgets/budgets.dart';
+import 'package:ai_crypto_alert/features/chatbot/chatbot.dart';
 import 'package:ai_crypto_alert/features/home/home.dart';
 import 'package:ai_crypto_alert/features/onboarding/onboarding.dart';
 import 'package:ai_crypto_alert/features/settings/settings.dart';
+import 'package:ai_crypto_alert/features/transactions/transactions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -14,6 +17,10 @@ part 'app_router.g.dart';
 // private navigators
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
+final _transactionsNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'transactions');
+final _chatbotNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'chatbot');
+final _budgetsNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'budgets');
 final _accountNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'account');
 
 // NavigationSheet requires a special NavigatorObserver in order to
@@ -29,6 +36,12 @@ enum AppRoute {
 
   home,
 
+  transactions,
+
+  chatbot,
+
+  budgets,
+
   notifications,
   favorite,
 
@@ -38,6 +51,8 @@ enum AppRoute {
   termsOfService,
   faq,
   helpCenter,
+  manageBilling,
+  inviteFriends,
 }
 
 @riverpod
@@ -64,7 +79,7 @@ GoRouter goRouter(Ref ref) {
         return null;
       }
       // final isLoggedIn = authRepository.currentUser != null;
-      final isLoggedIn = false;
+      final isLoggedIn = true;
 
       if (isLoggedIn) {
         if (path.startsWith('/startup') ||
@@ -163,6 +178,45 @@ GoRouter goRouter(Ref ref) {
                 name: AppRoute.home.name,
                 pageBuilder: (context, state) => const NoTransitionPage(
                   child: HomeScreen(),
+                ),
+                routes: [],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: _transactionsNavigatorKey,
+            routes: [
+              GoRoute(
+                path: '/transactions',
+                name: AppRoute.transactions.name,
+                pageBuilder: (context, state) => const NoTransitionPage(
+                  child: TransactionsScreen(),
+                ),
+                routes: [],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: _chatbotNavigatorKey,
+            routes: [
+              GoRoute(
+                path: '/chatbot',
+                name: AppRoute.chatbot.name,
+                pageBuilder: (context, state) => const NoTransitionPage(
+                  child: ChatbotScreen(),
+                ),
+                routes: [],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: _budgetsNavigatorKey,
+            routes: [
+              GoRoute(
+                path: '/budgets',
+                name: AppRoute.budgets.name,
+                pageBuilder: (context, state) => const NoTransitionPage(
+                  child: BudgetsScreen(),
                 ),
                 routes: [],
               ),

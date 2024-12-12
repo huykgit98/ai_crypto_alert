@@ -44,5 +44,22 @@
   "off": "Off",
   "system": "System",
   "systemSubtitle": "We'll adjust your appearance based on your device's system settings.",
-  "home": "Home"
+  "home": "Home",
+  "settings": "Settings",
+
+  "account": "Account",
+  "myDetails": "My Details",
+  "manageBilling": "Manage Billing",
+  "friendInvitation": "Friend Invitation",
+  "contentAndDisplay": "Content & Display",
+  "notifications": "Notifications",
+  "about": "About",
+  "termOfService": "Term of Service",
+  "faqPage": "FAQ",
+  "helpCenter": "Help Center",
+  "version": "Version",
+  "dangerousZone": "Dangerous Zone",
+  "deleteAccount": "Delete Account",
+  "signOutConfirmation": "Are you sure you want to sign out?",
+  "cancel": "Cancel"
 }

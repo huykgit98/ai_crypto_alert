@@ -109,8 +109,8 @@ extension GradientUtils on BuildContext {
         radius: 0.9,
         center: Alignment.bottomRight,
         colors: [
-          moonColors!.dodoria.withOpacity(.3),
-          moonColors!.dodoria.withOpacity(.1),
+          moonColors!.frieza10.withOpacity(.3),
+          moonColors!.frieza10.withOpacity(.1),
           moonColors!.goku.withOpacity(0),
         ],
       );
@@ -119,7 +119,7 @@ extension GradientUtils on BuildContext {
         radius: 0.8,
         center: Alignment.topCenter,
         colors: [
-          moonColors!.dodoria10,
+          moonColors!.frieza10,
           moonColors!.goku.withOpacity(0),
         ],
       );
@@ -128,8 +128,8 @@ extension GradientUtils on BuildContext {
         radius: 0.8,
         center: Alignment.topRight,
         colors: [
-          moonColors!.cell10,
-          moonColors!.cell10,
+          moonColors!.frieza10,
+          moonColors!.frieza10,
           moonColors!.goku.withOpacity(0),
         ],
       );

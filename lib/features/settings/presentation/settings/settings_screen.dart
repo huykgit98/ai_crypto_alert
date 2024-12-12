@@ -1,12 +1,13 @@
+import 'package:ai_crypto_alert/core/constants/constants.dart';
 import 'package:ai_crypto_alert/core/routes/routes.dart';
 import 'package:ai_crypto_alert/core/utils/string_utils.dart';
 import 'package:ai_crypto_alert/core/widgets/widgets.dart';
-import 'package:ai_crypto_alert/features/settings/data/profile_repository.dart';
-import 'package:ai_crypto_alert/features/settings/presentation/settings_controller.dart';
+import 'package:ai_crypto_alert/features/settings/settings.dart';
 import 'package:ai_crypto_alert/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:moon_design/moon_design.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
@@ -22,14 +23,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(settingsControllerProvider);
-    final userProfile = ref.watch(profileFutureProvider).value;
+    // final user =
+    //     ref.watch(settingsControllerProvider.notifier).getCurrentUser();
+    // final userProfile = ref.watch(profileFutureProvider).value;
 
     return CustomScrollView(
       controller: _scrollController,
       slivers: [
         CustomSliverAppBar(
           title: Text(
-            'Settings'.hardcoded,
+            context.l10n.settings,
             style: context.moonTypography?.heading.text20
                 .copyWith(fontWeight: FontWeight.bold),
           ),
@@ -39,15 +42,80 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             [
               const SizedBox(height: 16),
               _buildSection(
-                title: 'account',
+                title: context.l10n.account,
                 items: [
-                  // _menuItem(
-                  //     context, context.l10n.myDetails, MingCute.user_3_fill,
-                  //     onTap: () {
-                  //   context.goNamed(AppRoute.myDetails.name);
-                  // }, content: userProfile?.displayName ?? user?.email ?? ''),
+                  _menuItem(
+                      context, context.l10n.myDetails, MingCute.user_3_fill,
+                      onTap: () {
+                    context.goNamed(AppRoute.myDetails.name);
+                  }, content: 'wibu'),
+                  _menuItem(context, context.l10n.manageBilling,
+                      MingCute.wallet_3_fill, onTap: () {
+                    context.goNamed(AppRoute.manageBilling.name);
+                  }),
+                  _menuItem(context, context.l10n.friendInvitation,
+                      Icons.group_add_rounded, onTap: () {
+                    context.goNamed(AppRoute.inviteFriends.name);
+                  }),
+                  _menuItem(
+                    context,
+                    context.l10n.signOut,
+                    MingCute.exit_fill,
+                    onTap: state.isLoading
+                        ? null
+                        : () async {
+                            await _showSignOutDialog(context);
+                          },
+                    color: Colors.red,
+                  ),
                 ],
               ),
+              gapH16,
+              _buildSection(
+                title: context.l10n.contentAndDisplay,
+                items: [
+                  _menuItem(context, context.l10n.languageSettingTitle,
+                      Icons.language, onTap: () {
+                    bottomSheetBuilder(
+                        context: context, child: const LanguageSettingSheet());
+                  }),
+                  _menuItem(context, context.l10n.darkMode, MingCute.moon_fill,
+                      onTap: () {
+                    bottomSheetBuilder(
+                        context: context, child: const ThemeSettingSheet());
+                  }),
+                  _menuItem(context, context.l10n.notifications,
+                      MingCute.notification_fill, onTap: () {
+                    context.pushNamed(AppRoute.notificationSettings.name);
+                  }),
+                ],
+              ),
+              gapH16,
+              _buildSection(
+                title: context.l10n.about,
+                items: [
+                  _menuItem(context, context.l10n.termOfService,
+                      Icons.description_rounded, onTap: () {
+                    context.goNamed(AppRoute.termsOfService.name);
+                  }),
+                  _menuItem(context, context.l10n.faqPage,
+                      Icons.question_answer_rounded, onTap: () {
+                    context.goNamed(AppRoute.faq.name);
+                  }),
+                  _menuItem(
+                      context, context.l10n.helpCenter, Icons.help_rounded,
+                      onTap: () {
+                    context.goNamed(AppRoute.helpCenter.name);
+                  }),
+                  _menuItem(context, context.l10n.version, Icons.info_rounded,
+                      trailing: Text('1.1.0'.hardcoded)),
+                ],
+              ),
+              gapH16,
+              _buildHeaderSection(context.l10n.dangerousZone,
+                  color: Colors.red),
+              _menuItem(context, context.l10n.deleteAccount, Icons.delete,
+                  color: Colors.red, trailing: const SizedBox()),
             ],
           ),
         ),
@@ -125,8 +193,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       builder: (BuildContext context) {
         return AdaptiveConfirmDialog(
           title: l10n.signOut,
-          content: 'Are you sure you want to sign out?'.hardcoded,
-          cancelLabel: 'Cancel'.hardcoded,
+          content: l10n.signOutConfirmation,
+          cancelLabel: l10n.cancel,
           confirmLabel: l10n.signOut,
           onConfirm: () async {
             await ref.read(settingsControllerProvider.notifier).signOut();

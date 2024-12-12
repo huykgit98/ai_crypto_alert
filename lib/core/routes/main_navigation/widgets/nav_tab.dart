@@ -55,9 +55,9 @@ class _NavTabState extends State<NavTab> with SingleTickerProviderStateMixin {
     return LinearGradient(
       colors: [
         if (isSelected)
-          context.moonColors!.roshi
+          context.moonColors!.frieza60
         else
-          context.moonColors!.textPrimary.withOpacity(0.5),
+          context.moonColors!.textPrimary.withOpacity(0.3),
         if (isSelected)
           context.moonColors!.whis
         else
@@ -73,6 +73,9 @@ class _NavTabState extends State<NavTab> with SingleTickerProviderStateMixin {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
+        // Do nothing if the tapped tab is the current tab
+        if (widget.isSelected) return;
+
         VibrationUtil.vibrate(context);
         if (Theme.of(context).platform == TargetPlatform.iOS) {
           SystemSound.play(SystemSoundType.click);
@@ -80,7 +83,6 @@ class _NavTabState extends State<NavTab> with SingleTickerProviderStateMixin {
         _handleTap();
       },
       child: Container(
-        width: 80,
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).padding.bottom,
           // top: Sizes.p8,

@@ -1,22 +1,24 @@
-import 'package:ai_crypto_alert/core/constants/constants.dart';
+import 'package:ai_crypto_alert/core/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/services.dart';
+import 'package:icons_plus/icons_plus.dart';
+import 'package:moon_design/moon_design.dart';
 
 class AddButton extends StatefulWidget {
-  final Function onTap;
-  final bool inverted;
-
   const AddButton({
-    Key? key,
     required this.onTap,
-    required this.inverted,
-  }) : super(key: key);
+    this.label = '',
+    super.key,
+  });
+
+  final Function onTap;
+  final String label;
 
   @override
-  State<AddButton> createState() => _PostVideoButtonState();
+  State<AddButton> createState() => _AddButtonState();
 }
 
-class _PostVideoButtonState extends State<AddButton>
+class _AddButtonState extends State<AddButton>
     with SingleTickerProviderStateMixin {
   late double _scale;
   late AnimationController _controller;
@@ -25,10 +27,7 @@ class _PostVideoButtonState extends State<AddButton>
   void initState() {
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(
-        milliseconds: 100,
-      ),
-      lowerBound: 0.0,
+      duration: const Duration(milliseconds: 100),
       upperBound: 0.2,
     )..addListener(() {
         setState(() {});
@@ -38,8 +37,8 @@ class _PostVideoButtonState extends State<AddButton>
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   void _tapDown(TapDownDetails details) {
@@ -48,71 +47,70 @@ class _PostVideoButtonState extends State<AddButton>
 
   void _tapUp(TapUpDetails details) {
     _controller.reverse();
+    VibrationUtil.vibrate(context);
+    if (Theme.of(context).platform == TargetPlatform.iOS) {
+      SystemSound.play(SystemSoundType.click);
+    }
     widget.onTap();
+  }
+
+  LinearGradient _buildGradient(BuildContext context) {
+    return LinearGradient(
+      colors: [
+        context.moonColors!.frieza60,
+        context.moonColors!.whis,
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     _scale = 1 + _controller.value;
+
+    final backgroundColor = context.moonColors?.goku;
+
     return GestureDetector(
       onTapDown: _tapDown,
       onTapUp: _tapUp,
       child: Transform.scale(
         scale: _scale,
-        child: Stack(
-          clipBehavior: Clip.none,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Positioned(
-              right: 20,
-              child: Container(
-                height: 30,
-                width: 25,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Sizes.p8,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xff61D4F0),
-                  borderRadius: BorderRadius.circular(
-                    Sizes.p8,
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  height: 60,
+                  width: 60,
+                  decoration: BoxDecoration(
+                    color: backgroundColor,
+                    shape: BoxShape.circle,
+                  ),
+                  child: ShaderMask(
+                    shaderCallback: (Rect bounds) =>
+                        _buildGradient(context).createShader(bounds),
+                    blendMode: BlendMode.srcIn,
+                    child: const Icon(
+                      OctIcons.copilot,
+                      size: 48,
+                    ),
                   ),
                 ),
+              ],
+            ),
+            const SizedBox(height: 4), // Space between icon and label
+            // Label
+            Text(
+              widget.label,
+              style: TextStyle(
+                color: context.moonColors?.textPrimary,
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
               ),
             ),
-            Positioned(
-              left: 20,
-              child: Container(
-                height: 30,
-                width: 25,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Sizes.p8,
-                ),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(
-                    Sizes.p8,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              height: 30,
-              padding: const EdgeInsets.symmetric(
-                horizontal: Sizes.p8,
-              ),
-              decoration: BoxDecoration(
-                color: !widget.inverted ? Colors.white : Colors.black,
-                borderRadius: BorderRadius.circular(
-                  Sizes.p8,
-                ),
-              ),
-              child: Center(
-                child: FaIcon(
-                  FontAwesomeIcons.plus,
-                  color: !widget.inverted ? Colors.black : Colors.white,
-                  size: 18,
-                ),
-              ),
-            )
           ],
         ),
       ),
