@@ -31,8 +31,8 @@ class CustomSliverAppBar extends StatelessWidget {
             gradient: LinearGradient(
               colors: gradient ??
                   [
-                    context.moonColors!.jiren.withOpacity(0.95),
-                    context.moonColors!.roshi.withOpacity(0.9),
+                    context.moonColors!.frieza60,
+                    context.moonColors!.jiren,
                   ],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,

@@ -15,7 +15,7 @@ class OverlayLoadingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AbsorbPointer(
       child: Container(
-        color: context.moonColors?.beerus.withOpacity(0.5),
+        color: context.moonColors?.beerus.withValues(alpha: 0.5),
         child: Center(
           child: CustomProgressIndicator(size: size),
         ),

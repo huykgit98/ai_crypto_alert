@@ -44,7 +44,7 @@ final lightTheme = ThemeData.light().copyWith(
       //   tokens: lightTokens,
       //   controlHoverEffect: MoonEffectsTheme(tokens: lightTokens)
       //       .controlHoverEffect
-      //       .copyWith(primaryHoverColor: Colors.white.withOpacity(0.3)),
+      //       .copyWith(primaryHoverColor: Colors.white.withValues(alpha:0.3)),
       // ),
     ),
   ],
@@ -88,7 +88,7 @@ final darkTheme = ThemeData.dark().copyWith(
       //   tokens: lightTokens,
       //   controlHoverEffect: MoonEffectsTheme(tokens: lightTokens)
       //       .controlHoverEffect
-      //       .copyWith(primaryHoverColor: Colors.white.withOpacity(0.3)),
+      //       .copyWith(primaryHoverColor: Colors.white.withValues(alpha:0.3)),
       // ),
     ),
   ],

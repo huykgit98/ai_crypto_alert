@@ -231,7 +231,13 @@ GoRouter goRouter(Ref ref) {
                 pageBuilder: (context, state) => const NoTransitionPage(
                   child: SettingsScreen(),
                 ),
-                routes: [],
+                routes: [
+                  GoRoute(
+                    path: 'myDetails',
+                    name: AppRoute.myDetails.name,
+                    builder: (context, state) => const MyDetailsScreen(),
+                  ),
+                ],
               ),
             ],
           ),

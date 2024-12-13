@@ -101,7 +101,7 @@ extension GradientUtils on BuildContext {
           moonColors!.frieza10,
           moonColors!.frieza10,
           moonColors!.frieza10,
-          moonColors!.goku.withOpacity(0),
+          moonColors!.goku.withValues(alpha: 0),
         ],
       );
 
@@ -109,9 +109,9 @@ extension GradientUtils on BuildContext {
         radius: 0.9,
         center: Alignment.bottomRight,
         colors: [
-          moonColors!.frieza10.withOpacity(.3),
-          moonColors!.frieza10.withOpacity(.1),
-          moonColors!.goku.withOpacity(0),
+          moonColors!.frieza10.withValues(alpha: .3),
+          moonColors!.frieza10.withValues(alpha: .1),
+          moonColors!.goku.withValues(alpha: 0),
         ],
       );
 
@@ -120,7 +120,7 @@ extension GradientUtils on BuildContext {
         center: Alignment.topCenter,
         colors: [
           moonColors!.frieza10,
-          moonColors!.goku.withOpacity(0),
+          moonColors!.goku.withValues(alpha: 0),
         ],
       );
 
@@ -130,7 +130,7 @@ extension GradientUtils on BuildContext {
         colors: [
           moonColors!.frieza10,
           moonColors!.frieza10,
-          moonColors!.goku.withOpacity(0),
+          moonColors!.goku.withValues(alpha: 0),
         ],
       );
 }

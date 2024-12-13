@@ -138,7 +138,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       padding: const EdgeInsets.symmetric(
         horizontal: 16,
       ),
-      color: context.moonColors?.beerus,
+      color: context.moonColors?.gohan,
       child: Text(
         title,
         style: context.moonTypography?.heading.text16.copyWith(
@@ -153,7 +153,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     return Container(
       margin: const EdgeInsets.only(left: 16, right: 16),
       decoration: BoxDecoration(
-        color: context.moonColors?.raditz,
+        color: context.moonColors?.goku,
         borderRadius: BorderRadius.circular(16),
       ),
       child: child,

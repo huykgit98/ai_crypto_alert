@@ -11,7 +11,7 @@ class AddButton extends StatefulWidget {
     super.key,
   });
 
-  final Function onTap;
+  final void Function()? onTap;
   final String label;
 
   @override
@@ -51,7 +51,7 @@ class _AddButtonState extends State<AddButton>
     if (Theme.of(context).platform == TargetPlatform.iOS) {
       SystemSound.play(SystemSoundType.click);
     }
-    widget.onTap();
+    widget.onTap!();
   }
 
   LinearGradient _buildGradient(BuildContext context) {

@@ -57,11 +57,11 @@ class _NavTabState extends State<NavTab> with SingleTickerProviderStateMixin {
         if (isSelected)
           context.moonColors!.frieza60
         else
-          context.moonColors!.textPrimary.withOpacity(0.3),
+          context.moonColors!.textPrimary.withValues(alpha: 0.3),
         if (isSelected)
           context.moonColors!.whis
         else
-          context.moonColors!.textPrimary.withOpacity(0.5),
+          context.moonColors!.textPrimary.withValues(alpha: 0.5),
       ],
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
@@ -74,7 +74,7 @@ class _NavTabState extends State<NavTab> with SingleTickerProviderStateMixin {
       behavior: HitTestBehavior.opaque,
       onTap: () {
         // Do nothing if the tapped tab is the current tab
-        if (widget.isSelected) return;
+        // if (widget.isSelected) return;
 
         VibrationUtil.vibrate(context);
         if (Theme.of(context).platform == TargetPlatform.iOS) {
@@ -104,7 +104,7 @@ class _NavTabState extends State<NavTab> with SingleTickerProviderStateMixin {
                 widget.text,
                 style: context.moonTypography?.heading.textDefault.copyWith(
                   color: context.moonColors?.textPrimary
-                      .withOpacity(widget.isSelected ? 1 : 0.5),
+                      .withValues(alpha: widget.isSelected ? 1 : 0.5),
                   fontWeight: FontWeight.bold,
                   fontSize: 11,
                 ),

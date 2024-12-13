@@ -48,8 +48,6 @@ class ScaffoldWithNavigationBar extends ConsumerWidget {
   final ValueChanged<int> onDestinationSelected;
 
   void _handleTap(int index) {
-    // Do nothing if the tapped tab is the current tab
-    if (index == currentIndex) return;
     onDestinationSelected(index);
   }
 
@@ -78,7 +76,7 @@ class ScaffoldWithNavigationBar extends ConsumerWidget {
               color: context.moonColors?.goku,
               border: Border(
                 top: BorderSide(
-                  color: Colors.grey.withOpacity(0.2),
+                  color: Colors.grey.withValues(alpha: 0.2),
                 ),
               ),
             ),
@@ -112,10 +110,7 @@ class ScaffoldWithNavigationBar extends ConsumerWidget {
             right: 0,
             child: Center(
               child: AddButton(
-                onTap: () {
-                  // Handle AddButton tap
-                  print('AddButton tapped!');
-                },
+                onTap: () => _handleTap(2),
               ),
             ),
           ),
