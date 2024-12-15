@@ -47,7 +47,7 @@ enum AppRoute {
 
   profile,
   myDetails,
-  notificationSettings,
+  notificationsSetting,
   termsOfService,
   faq,
   helpCenter,
@@ -79,7 +79,7 @@ GoRouter goRouter(Ref ref) {
         return null;
       }
       // final isLoggedIn = authRepository.currentUser != null;
-      final isLoggedIn = false;
+      final isLoggedIn = true;
 
       if (isLoggedIn) {
         if (path.startsWith('/startup') ||
@@ -236,6 +236,12 @@ GoRouter goRouter(Ref ref) {
                     path: 'myDetails',
                     name: AppRoute.myDetails.name,
                     builder: (context, state) => const MyDetailsScreen(),
+                  ),
+                  GoRoute(
+                    path: 'notificationsSetting',
+                    name: AppRoute.notificationsSetting.name,
+                    builder: (context, state) =>
+                        const NotificationsSettingScreen(),
                   ),
                 ],
               ),

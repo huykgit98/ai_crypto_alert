@@ -86,7 +86,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   }),
                   _menuItem(context, context.l10n.notifications,
                       MingCute.notification_fill, onTap: () {
-                    context.pushNamed(AppRoute.notificationSettings.name);
+                    context.pushNamed(AppRoute.notificationsSetting.name);
                   }),
                 ],
               ),
