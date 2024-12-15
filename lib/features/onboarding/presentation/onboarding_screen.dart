@@ -60,14 +60,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                               setState(() => selectedDot = index),
                           itemBuilder:
                               (BuildContext context, int itemIndex, int _) =>
-                                  Container(
-                            decoration: ShapeDecoration(
-                              color: context.moonColors!.heles,
-                              shape: MoonSquircleBorder(
-                                borderRadius: BorderRadius.circular(12)
-                                    .squircleBorderRadius(context),
-                              ),
-                            ),
+                                  BorderBeam(
+                            duration: 7,
+                            colorFrom: context.moonColors!.piccolo,
+                            colorTo: context.moonColors!.chichi,
+                            // staticBorderColor: const Color.fromARGB(
+                            //     255, 39, 39, 42), //rgb(39 39 42)
+                            borderRadius: BorderRadius.circular(20),
+
+                            padding: const EdgeInsets.all(16),
                             child: Center(
                               child: Text('${itemIndex + 1}'),
                             ),

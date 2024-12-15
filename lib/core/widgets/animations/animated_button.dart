@@ -41,10 +41,9 @@ class AnimatedButton extends StatelessWidget {
             )
           : MoonOutlinedButton(
               buttonSize: MoonButtonSize.lg,
-              // borderColor: borderColor ?? context.moonColors!.zeno,
+              borderColor: borderColor ?? context.moonColors!.textSecondary,
               borderRadius: BorderRadius.circular(16),
               onTap: onTap,
-
               label: Text(
                 label,
                 style: TextStyle(color: context.moonColors!.bulma),
