@@ -2,9 +2,10 @@ import 'package:ai_crypto_alert/core/constants/constants.dart';
 import 'package:ai_crypto_alert/core/routes/routes.dart';
 import 'package:ai_crypto_alert/core/widgets/widgets.dart';
 import 'package:ai_crypto_alert/features/onboarding/onboarding.dart';
-import 'package:ai_crypto_alert/features/onboarding/presentation/widgets/widgets.dart';
+import 'package:ai_crypto_alert/features/onboarding/presentation/widgets/top_row_widget.dart';
 import 'package:ai_crypto_alert/l10n/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moon_design/moon_design.dart';
@@ -24,25 +25,33 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     final state = ref.watch(onboardingControllerProvider);
 
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          TopRow(
+            isLoading: state.isLoading,
+            onLanguageTap: () => bottomSheetBuilder(
+              context: context,
+              child: const LanguageSettingSheet(),
+            ),
+            onThemeTap: () => bottomSheetBuilder(
+              context: context,
+              child: const ThemeSettingSheet(),
+            ),
+          ),
+          const SizedBox(width: 16),
+        ],
+        backgroundColor: Colors.transparent,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
+      ),
       backgroundColor: context.moonColors!.goku,
-      body: MeshRadialGradientBackground(
+      extendBodyBehindAppBar: true,
+      body: CosmicGradientBackground(
         child: SafeArea(
           child: ResponsiveCenter(
             maxContentWidth: 450,
             padding: const EdgeInsets.all(Sizes.p16),
             child: Stack(
               children: [
-                TopRow(
-                  isLoading: state.isLoading,
-                  onLanguageTap: () => bottomSheetBuilder(
-                    context: context,
-                    child: const LanguageSettingSheet(),
-                  ),
-                  onThemeTap: () => bottomSheetBuilder(
-                    context: context,
-                    child: const ThemeSettingSheet(),
-                  ),
-                ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,24 +89,30 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     MoonDotIndicator(
                       selectedDot: selectedDot,
                       dotCount: 3,
-                      selectedColor: context.moonColors!.bulma,
+                      selectedColor: context.moonColors!.piccolo,
                     ),
                     const SizedBox(height: 16),
                     AnimatedText(
                       text: context.l10n.welcomeToITree,
-                      style: context.moonTypography?.heading.text24.copyWith(),
+                      style: context.moonTypography?.heading.text24.copyWith(
+                        color: context.moonColors!.goten,
+                      ),
                       delay: 0,
                     ),
                     const SizedBox(height: 16),
                     AnimatedText(
                       text: context.l10n.onBoardingSubtitle1,
-                      style: context.moonTypography?.body.text14.copyWith(),
+                      style: context.moonTypography?.body.text14.copyWith(
+                        color: context.moonColors!.goten,
+                      ),
                       delay: 300,
                     ),
                     const SizedBox(height: 8),
                     AnimatedText(
                       text: context.l10n.onBoardingSubtitle2,
-                      style: context.moonTypography?.body.text14.copyWith(),
+                      style: context.moonTypography?.body.text14.copyWith(
+                        color: context.moonColors!.goten,
+                      ),
                       delay: 300,
                     ),
                     const SizedBox(height: 32),
@@ -107,6 +122,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           label: context.l10n.logIn,
                           delay: 600,
                           gradientColors: [
+                            context.moonColors!.jiren,
                             context.moonColors!.frieza60,
                             context.moonColors!.piccolo,
                           ],
@@ -115,7 +131,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                               : () async {
                                   await ref
                                       .read(
-                                          onboardingControllerProvider.notifier)
+                                        onboardingControllerProvider.notifier,
+                                      )
                                       .completeOnboarding();
                                   if (context.mounted) {
                                     context.goNamed(AppRoute.signIn.name);
@@ -131,7 +148,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                               : () async {
                                   await ref
                                       .read(
-                                          onboardingControllerProvider.notifier)
+                                        onboardingControllerProvider.notifier,
+                                      )
                                       .completeOnboarding();
                                   if (context.mounted) {
                                     context.goNamed(AppRoute.signUp.name);

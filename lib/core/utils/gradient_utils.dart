@@ -98,9 +98,9 @@ extension GradientUtils on BuildContext {
         radius: 0.9,
         center: Alignment.topLeft,
         colors: [
-          moonColors!.frieza10,
-          moonColors!.frieza10,
-          moonColors!.frieza10,
+          moonColors!.frieza.withValues(alpha: 0.2),
+          moonColors!.frieza.withValues(alpha: 0.1),
+          moonColors!.frieza.withValues(alpha: 0.1),
           moonColors!.goku.withValues(alpha: 0),
         ],
       );

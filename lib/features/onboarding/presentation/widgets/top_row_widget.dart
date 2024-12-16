@@ -37,13 +37,19 @@ class TopRow extends StatelessWidget {
               context.l10n.localeName == LanguageCode.en.name
                   ? context.l10n.english
                   : context.l10n.vietnamese,
+              style: context.moonTypography?.body.text14.copyWith(
+                color: context.moonColors!.goten,
+              ),
             ),
           ),
           const SizedBox(width: 8),
           MoonButton.icon(
             buttonSize: MoonButtonSize.sm,
             onTap: isLoading ? null : onThemeTap,
-            icon: const Icon(MingCute.brightness_line),
+            icon: Icon(
+              MingCute.brightness_line,
+              color: context.moonColors!.goten,
+            ),
           ),
         ],
       ),

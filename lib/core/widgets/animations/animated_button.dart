@@ -46,7 +46,7 @@ class AnimatedButton extends StatelessWidget {
               onTap: onTap,
               label: Text(
                 label,
-                style: TextStyle(color: context.moonColors!.bulma),
+                style: TextStyle(color: context.moonColors!.goten),
               ),
               isFullWidth: true,
             ),
