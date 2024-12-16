@@ -123,8 +123,8 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           delay: 600,
                           gradientColors: [
                             context.moonColors!.jiren,
-                            context.moonColors!.frieza60,
                             context.moonColors!.piccolo,
+                            context.moonColors!.jiren,
                           ],
                           onTap: state.isLoading
                               ? null
