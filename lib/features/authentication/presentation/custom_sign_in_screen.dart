@@ -104,22 +104,73 @@ class _CustomSignInState extends ConsumerState<CustomSignInScreen> {
                     topRight: Radius.circular(40),
                   ),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Sizes.p16),
-                  child: Column(
-                    children: [
-                      const SignInLogoWidget(),
-                      gapH16,
-                      _buildForm(context),
-                      Expanded(
-                        child: AuthPrompt(
-                          promptText: context.l10n.signUpPrompt,
-                          actionText: context.l10n.signUp,
-                          routeName: AppRoute.signUp.name,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      bottom: 16,
+                      left: 48,
+                      child: Transform.rotate(
+                        angle: 180,
+                        child: Icon(
+                          MingCute.bling_fill,
+                          color: context.moonColors?.frieza60,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    Positioned(
+                      top: 90,
+                      right: 60,
+                      child: Transform.rotate(
+                        angle: 90,
+                        child: Icon(
+                          MingCute.bling_fill,
+                          color: context.moonColors?.frieza60,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 32,
+                      left: 60,
+                      child: Transform.rotate(
+                        angle: 180,
+                        child: Icon(
+                          Icons.auto_awesome,
+                          size: 48,
+                          color: context.moonColors?.frieza60,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 90,
+                      right: 60,
+                      child: Transform.rotate(
+                        angle: 90,
+                        child: Icon(
+                          Icons.auto_awesome,
+                          size: 48,
+                          color: context.moonColors?.frieza60,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: Sizes.p16),
+                      child: Column(
+                        children: [
+                          const SignInLogoWidget(),
+                          gapH16,
+                          _buildForm(context),
+                          Expanded(
+                            child: AuthPrompt(
+                              promptText: context.l10n.signUpPrompt,
+                              actionText: context.l10n.signUp,
+                              routeName: AppRoute.signUp.name,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
