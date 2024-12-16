@@ -76,10 +76,11 @@ GoRouter goRouter(Ref ref) {
         if (path != '/onboarding') {
           return '/onboarding';
         }
+
         return null;
       }
       // final isLoggedIn = authRepository.currentUser != null;
-      final isLoggedIn = false;
+      final isLoggedIn = true;
 
       if (isLoggedIn) {
         if (path.startsWith('/startup') ||

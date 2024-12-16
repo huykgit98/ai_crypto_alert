@@ -46,7 +46,8 @@
   "systemSubtitle": "We'll adjust your appearance based on your device's system settings.",
   "home": "Home",
   "settings": "Settings",
-
+  "transactions": "Transactions",
+  "budgets": "Budgets",
   "account": "Account",
   "myDetails": "My Details",
   "manageBilling": "Manage Billing",

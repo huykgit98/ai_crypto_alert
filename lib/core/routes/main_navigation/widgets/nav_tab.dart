@@ -73,9 +73,6 @@ class _NavTabState extends State<NavTab> with SingleTickerProviderStateMixin {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        // Do nothing if the tapped tab is the current tab
-        // if (widget.isSelected) return;
-
         VibrationUtil.vibrate(context);
         if (Theme.of(context).platform == TargetPlatform.iOS) {
           SystemSound.play(SystemSoundType.click);

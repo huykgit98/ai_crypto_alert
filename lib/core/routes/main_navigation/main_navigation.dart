@@ -1,9 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_firstmport 'package:flutter/material.dart';
 import 'package:ai_crypto_alert/core/routes/main_navigation/widgets/widgets.dart';
+import 'package:ai_crypto_alert/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:moon_design/moon_design.dart';
 
 // Stateful navigation based on:
@@ -55,11 +57,29 @@ class ScaffoldWithNavigationBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // List of tabs
     final tabs = [
-      {'icon': FontAwesomeIcons.house, 'label': 'Tổng quan'},
-      {'icon': FontAwesomeIcons.fileInvoiceDollar, 'label': 'Sổ giao dịch'},
-      {'isAddButton': true}, // Mark the 3rd tab as AddButton
-      {'icon': FontAwesomeIcons.wallet, 'label': 'Ngân sách'},
-      {'icon': FontAwesomeIcons.cogs, 'label': 'Tiện ích'},
+      {
+        'icon': MingCute.home_1_line,
+        'selectedIcon': MingCute.home_1_fill,
+        'label': context.l10n.home,
+      },
+      {
+        'icon': MingCute.exchange_dollar_line,
+        'selectedIcon': MingCute.exchange_dollar_fill,
+        'label': context.l10n.transactions,
+      },
+      {
+        'isAddButton': true, // Mark the 3rd tab as AddButton
+      },
+      {
+        'icon': MingCute.pig_money_line,
+        'selectedIcon': MingCute.pig_money_fill,
+        'label': context.l10n.budgets,
+      },
+      {
+        'icon': MingCute.settings_1_line,
+        'selectedIcon': MingCute.settings_1_fill,
+        'label': context.l10n.settings,
+      },
     ];
 
     final tabWidth = MediaQuery.of(context).size.width / tabs.length;
@@ -87,17 +107,16 @@ class ScaffoldWithNavigationBar extends ConsumerWidget {
 
                 if (tab.containsKey('isAddButton') &&
                     tab['isAddButton'] == true) {
-                  // Leave space for the AddButton
-                  return SizedBox(width: tabWidth);
+                  return SizedBox(width: tabWidth); // Leave space for AddButton
                 }
 
-                // Render a regular NavTab
                 return SizedBox(
                   width: tabWidth,
                   child: _buildNavTab(
                     context,
                     index,
                     tab['icon'] as IconData,
+                    tab['selectedIcon'] as IconData,
                     tab['label'] as String,
                   ),
                 );
@@ -119,13 +138,13 @@ class ScaffoldWithNavigationBar extends ConsumerWidget {
     );
   }
 
-  Widget _buildNavTab(
-      BuildContext context, int index, IconData icon, String label) {
+  Widget _buildNavTab(BuildContext context, int index, IconData icon,
+      IconData selectedIcon, String label) {
     return NavTab(
       text: label,
       isSelected: currentIndex == index,
-      icon: FaIcon(icon, size: 18),
-      selectedIcon: FaIcon(icon, size: 18),
+      icon: FaIcon(icon, size: 24),
+      selectedIcon: FaIcon(selectedIcon, size: 24),
       onTap: () => _handleTap(index),
     );
   }
