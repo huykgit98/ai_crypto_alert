@@ -53,10 +53,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       MingCute.wallet_3_fill, onTap: () {
                     context.goNamed(AppRoute.manageBilling.name);
                   }),
-                  _menuItem(context, context.l10n.friendInvitation,
-                      Icons.group_add_rounded, onTap: () {
-                    context.goNamed(AppRoute.inviteFriends.name);
-                  }),
                   _menuItem(
                     context,
                     context.l10n.signOut,

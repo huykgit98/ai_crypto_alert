@@ -244,6 +244,12 @@ GoRouter goRouter(Ref ref) {
                     builder: (context, state) =>
                         const NotificationsSettingScreen(),
                   ),
+                  GoRoute(
+                    path: 'termOfService',
+                    name: AppRoute.termsOfService.name,
+                    parentNavigatorKey: _rootNavigatorKey,
+                    builder: (context, state) => const TermOfServiceScreen(),
+                  ),
                 ],
               ),
             ],

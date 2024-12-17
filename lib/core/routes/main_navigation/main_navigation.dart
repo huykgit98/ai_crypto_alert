@@ -60,7 +60,7 @@ class _ScaffoldWithNavigationBarState
     with SingleTickerProviderStateMixin {
   late int _currentIndex;
   late final AnimationController _controller = AnimationController(
-    duration: const Duration(milliseconds: 300),
+    duration: const Duration(milliseconds: 400),
     vsync: this,
   );
 
@@ -130,85 +130,99 @@ class _ScaffoldWithNavigationBarState
     final tabWidth = MediaQuery.of(context).size.width / tabs.length;
 
     return Scaffold(
-      body: AnimatedBuilder(
-        animation: _controller,
-        builder: (BuildContext context, Widget? child) {
-          return Stack(
-            children: [
-              child!,
-              // Animated Floating Action Menu
-              BottomBarActionMenuRow(
-                topPosition: _bottomBarActionMenuTopPosition.value,
-                controller: _controller,
-              ),
-              // Bottom Navigation Bar
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: Container(
-                  padding: const EdgeInsets.only(top: 8),
-                  decoration: BoxDecoration(
-                    color: context.moonColors?.goku,
-                    border: Border(
-                      top: BorderSide(
-                        color: Colors.grey.withValues(alpha: 0.2),
+      body: GestureDetector(
+        behavior: HitTestBehavior.translucent, // Capture taps anywhere outside
+        onTap: () {
+          if (_controller.isCompleted) {
+            _controller.reverse(); // Hide BottomBarActionMenuRow
+          }
+        },
+        child: AnimatedBuilder(
+          animation: _controller,
+          builder: (BuildContext context, Widget? child) {
+            return Stack(
+              children: [
+                child!,
+                // Animated Floating Action Menu
+                BottomBarActionMenuRow(
+                  topPosition: _bottomBarActionMenuTopPosition.value,
+                  controller: _controller,
+                ),
+                // Bottom Navigation Bar
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 8),
+                    decoration: BoxDecoration(
+                      color: context.moonColors?.goku,
+                      border: Border(
+                        top: BorderSide(
+                          color: Colors.grey.withValues(alpha: 0.2),
+                        ),
                       ),
                     ),
-                  ),
-                  child: Row(
-                    children: tabs.asMap().entries.map((entry) {
-                      final index = entry.key;
-                      final tab = entry.value;
+                    child: Row(
+                      children: tabs.asMap().entries.map((entry) {
+                        final index = entry.key;
+                        final tab = entry.value;
 
-                      if (tab.containsKey('isAddButton') &&
-                          tab['isAddButton'] == true) {
+                        if (tab.containsKey('isAddButton') &&
+                            tab['isAddButton'] == true) {
+                          return SizedBox(
+                              width: tabWidth); // Leave space for AddButton
+                        }
+
                         return SizedBox(
-                            width: tabWidth); // Leave space for AddButton
-                      }
-
-                      return SizedBox(
-                        width: tabWidth,
-                        child: _buildNavTab(
-                          context,
-                          index,
-                          tab['icon'] as IconData,
-                          tab['selectedIcon'] as IconData,
-                          tab['label'] as String,
-                        ),
-                      );
-                    }).toList(),
+                          width: tabWidth,
+                          child: _buildNavTab(
+                            context,
+                            index,
+                            tab['icon'] as IconData,
+                            tab['selectedIcon'] as IconData,
+                            tab['label'] as String,
+                          ),
+                        );
+                      }).toList(),
+                    ),
                   ),
                 ),
-              ),
-              Positioned(
-                bottom: MediaQuery.of(context).padding.bottom,
-                left: 0,
-                right: 0,
-                child: Center(
-                  child: AddButton(
-                      onTap: () {
-                        if (_currentIndex == 2) {
+                Positioned(
+                  bottom: MediaQuery.of(context).padding.bottom,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: AddButton(
+                        onTap: () {
+                          if (_currentIndex == 2) {
+                            _controller.isCompleted
+                                ? _controller.reverse()
+                                : _controller.forward();
+                            return;
+                          }
+                          _handleTap(2);
+                        },
+                        onLongTap: () {
                           _controller.isCompleted
                               ? _controller.reverse()
                               : _controller.forward();
-                          return;
-                        }
-                        _handleTap(2);
-                      },
-                      onLongTap: () {
-                        _controller.isCompleted
-                            ? _controller.reverse()
-                            : _controller.forward();
-                      },
-                      label: 'Vi',
-                      isSelected: _currentIndex == 2),
+                        },
+                        label: 'Vi',
+                        isSelected: _currentIndex == 2),
+                  ),
                 ),
-              ),
-            ],
-          );
-        },
-        child: widget.body,
+              ],
+            );
+          },
+          child: Padding(
+            padding: EdgeInsets.only(
+              bottom: kBottomNavigationBarHeight +
+                  MediaQuery.of(context).padding.bottom,
+            ),
+            child: widget.body,
+          ),
+        ),
       ),
     );
   }

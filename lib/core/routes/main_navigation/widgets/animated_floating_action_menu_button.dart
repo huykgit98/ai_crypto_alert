@@ -30,15 +30,15 @@ class BottomBarActionMenuRow extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              context.moonColors!.jiren.withValues(alpha: 0.5),
-              context.moonColors!.jiren.withValues(alpha: 0.35),
-              context.moonColors!.jiren.withValues(alpha: 0.15),
+              context.moonColors!.jiren.withValues(alpha: 0.7),
+              context.moonColors!.jiren.withValues(alpha: 0.55),
+              context.moonColors!.jiren.withValues(alpha: 0.25),
               context.moonColors!.jiren.withValues(alpha: 0.015),
               context.moonColors!.jiren.withValues(alpha: 0.005),
             ],
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter,
-            stops: const [0.55, 0.65, 0.75, 0.85, 0.99],
+            stops: const [0.55, 0.65, 0.75, 0.85, 0.95],
           ),
         ),
         child: Row(
@@ -47,8 +47,8 @@ class BottomBarActionMenuRow extends StatelessWidget {
             int index = dataSet.indexOf(item);
             return SlideTransition(
               position: Tween<Offset>(
-                begin: Offset(0, 1.0 + (2 * index)),
-                end: Offset.zero,
+                begin: Offset(0, 1.0 + (3 * index)),
+                end: const Offset(0, -0.2),
               ).animate(controller),
               child: PIconButton(item: item),
             );
@@ -81,11 +81,11 @@ class PIconButton extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          item.text.toUpperCase(),
+          item.text,
           style: TextStyle(
-            fontSize: 10,
+            fontSize: 12,
             fontWeight: FontWeight.bold,
-            color: context.moonColors?.textPrimary,
+            color: context.moonColors?.goten,
           ),
           textAlign: TextAlign.center,
         ),

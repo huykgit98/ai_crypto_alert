@@ -69,7 +69,7 @@ class _AddButtonState extends State<AddButton>
   }
 
   void _onLongPressStart(LongPressStartDetails details) {
-    Future.delayed(const Duration(milliseconds: 300), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       if (widget.onLongTap != null) {
         HapticFeedback.selectionClick();
 
