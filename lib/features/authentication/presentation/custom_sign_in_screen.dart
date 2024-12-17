@@ -5,6 +5,7 @@ import 'package:ai_crypto_alert/core/widgets/widgets.dart';
 import 'package:ai_crypto_alert/features/authentication/presentation/widgets/widgets.dart';
 import 'package:ai_crypto_alert/l10n/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -113,8 +114,14 @@ class _CustomSignInState extends ConsumerState<CustomSignInScreen> {
                         angle: 180,
                         child: Icon(
                           MingCute.bling_fill,
+                          size: 32,
                           color: context.moonColors?.frieza60,
-                        ),
+                        ).animate().scale(
+                              duration: 2500.ms,
+                              begin: Offset.zero,
+                              end: const Offset(1, 1),
+                              curve: Curves.easeInOut,
+                            ),
                       ),
                     ),
                     Positioned(
@@ -124,8 +131,14 @@ class _CustomSignInState extends ConsumerState<CustomSignInScreen> {
                         angle: 90,
                         child: Icon(
                           MingCute.bling_fill,
+                          size: 32,
                           color: context.moonColors?.frieza60,
-                        ),
+                        ).animate().scale(
+                              duration: 1000.ms,
+                              begin: Offset.zero,
+                              end: const Offset(1, 1),
+                              curve: Curves.easeInOut,
+                            ),
                       ),
                     ),
                     Positioned(
@@ -137,11 +150,16 @@ class _CustomSignInState extends ConsumerState<CustomSignInScreen> {
                           Icons.auto_awesome,
                           size: 48,
                           color: context.moonColors?.frieza60,
-                        ),
+                        ).animate().scale(
+                              duration: 1500.ms,
+                              begin: Offset.zero,
+                              end: const Offset(1.5, 1.5),
+                              curve: Curves.easeInOut,
+                            ),
                       ),
                     ),
                     Positioned(
-                      bottom: 90,
+                      bottom: 80,
                       right: 60,
                       child: Transform.rotate(
                         angle: 90,
@@ -149,7 +167,12 @@ class _CustomSignInState extends ConsumerState<CustomSignInScreen> {
                           Icons.auto_awesome,
                           size: 48,
                           color: context.moonColors?.frieza60,
-                        ),
+                        ).animate().scale(
+                              duration: 1500.ms,
+                              begin: Offset.zero,
+                              end: const Offset(1.2, 1.2),
+                              curve: Curves.easeInOut,
+                            ),
                       ),
                     ),
                     Padding(

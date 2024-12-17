@@ -1,6 +1,7 @@
 import 'package:ai_crypto_alert/core/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:moon_design/moon_design.dart';
 
@@ -135,11 +136,13 @@ class _AddButtonState extends State<AddButton>
             // Label
             Text(
               widget.label,
-              style: TextStyle(
-                color: widget.isSelected
-                    ? context.moonColors?.piccolo
-                    : context.moonColors?.textSecondary,
-                fontWeight: FontWeight.bold,
+              style: GoogleFonts.zillaSlab(
+                textStyle: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: widget.isSelected
+                      ? context.moonColors?.piccolo
+                      : context.moonColors?.textSecondary,
+                ),
               ),
             ),
           ],
