@@ -7,12 +7,24 @@ import 'package:moon_design/moon_design.dart';
 class AddButton extends StatefulWidget {
   const AddButton({
     required this.onTap,
+    this.onLongTap,
     this.label = '',
+    this.rotationAngle = 0.5,
+    this.centerIconBackgroundColor,
+    this.centerIconForegroundColor,
+    this.showAnimatedFabMenu = false,
+    this.isSelected = false, // New isSelected param
     super.key,
   });
 
   final void Function()? onTap;
+  final void Function()? onLongTap;
   final String label;
+  final double? rotationAngle;
+  final Color? centerIconBackgroundColor;
+  final Color? centerIconForegroundColor;
+  final bool showAnimatedFabMenu;
+  final bool isSelected; // Indicates selection state
 
   @override
   State<AddButton> createState() => _AddButtonState();
@@ -51,13 +63,33 @@ class _AddButtonState extends State<AddButton>
     if (Theme.of(context).platform == TargetPlatform.iOS) {
       SystemSound.play(SystemSoundType.click);
     }
-    widget.onTap!();
+    if (widget.onTap != null) {
+      widget.onTap?.call();
+    }
+  }
+
+  void _onLongPressStart(LongPressStartDetails details) {
+    Future.delayed(const Duration(milliseconds: 300), () {
+      if (widget.onLongTap != null) {
+        HapticFeedback.selectionClick();
+
+        widget.onLongTap?.call();
+      }
+    });
+    _controller.forward(); // Scale up
+  }
+
+  void _onLongPressEnd(LongPressEndDetails details) {
+    _controller.reverse(); // Reverse the scale effect
   }
 
   LinearGradient _buildGradient(BuildContext context) {
     return LinearGradient(
       colors: [
-        context.moonColors!.frieza60,
+        if (widget.isSelected)
+          context.moonColors!.frieza
+        else
+          context.moonColors!.frieza10,
         context.moonColors!.whis,
       ],
       begin: Alignment.topLeft,
@@ -69,24 +101,23 @@ class _AddButtonState extends State<AddButton>
   Widget build(BuildContext context) {
     _scale = 1 + _controller.value;
 
-    final backgroundColor = context.moonColors?.goku;
-
     return GestureDetector(
       onTapDown: _tapDown,
       onTapUp: _tapUp,
+      onLongPressStart: _onLongPressStart, // Start long press
+      onLongPressEnd: _onLongPressEnd, // End long press
       child: Transform.scale(
         scale: _scale,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Stack(
-              clipBehavior: Clip.none,
               children: [
                 Container(
                   height: 60,
                   width: 60,
                   decoration: BoxDecoration(
-                    color: backgroundColor,
+                    color: context.moonColors?.goku,
                     shape: BoxShape.circle,
                   ),
                   child: ShaderMask(
@@ -101,14 +132,14 @@ class _AddButtonState extends State<AddButton>
                 ),
               ],
             ),
-            const SizedBox(height: 4), // Space between icon and label
             // Label
             Text(
               widget.label,
               style: TextStyle(
-                color: context.moonColors?.textPrimary,
+                color: widget.isSelected
+                    ? context.moonColors?.piccolo
+                    : context.moonColors?.textSecondary,
                 fontWeight: FontWeight.bold,
-                fontSize: 12,
               ),
             ),
           ],

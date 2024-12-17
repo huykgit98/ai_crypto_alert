@@ -38,24 +38,69 @@ class ScaffoldWithNestedNavigation extends StatelessWidget {
   }
 }
 
-class ScaffoldWithNavigationBar extends ConsumerWidget {
+class ScaffoldWithNavigationBar extends ConsumerStatefulWidget {
   const ScaffoldWithNavigationBar({
     required this.body,
     required this.currentIndex,
     required this.onDestinationSelected,
     super.key,
   });
+
   final Widget body;
   final int currentIndex;
   final ValueChanged<int> onDestinationSelected;
 
+  @override
+  ConsumerState<ScaffoldWithNavigationBar> createState() =>
+      _ScaffoldWithNavigationBarState();
+}
+
+class _ScaffoldWithNavigationBarState
+    extends ConsumerState<ScaffoldWithNavigationBar>
+    with SingleTickerProviderStateMixin {
+  late int _currentIndex;
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(milliseconds: 300),
+    vsync: this,
+  );
+
+  late final Animation<double> _rotationAngle =
+      Tween<double>(begin: 0, end: 0.5).animate(
+    CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+  );
+
+  late final Animation<Color?> _centerIconBackgroundColor = ColorTween(
+    begin: const Color(0xFFFF3841),
+    end: const Color(0xFFEAEAEA),
+  ).animate(_controller);
+
+  late final Animation<Color?> _centerIconForegroundColor = ColorTween(
+    begin: Colors.white,
+    end: Colors.black,
+  ).animate(_controller);
+
+  late final Animation<double?> _bottomBarActionMenuTopPosition = Tween<double>(
+    begin: 800,
+    end: 600,
+  ).animate(_controller);
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.currentIndex;
+  }
+
   void _handleTap(int index) {
-    onDestinationSelected(index);
+    setState(() {
+      _currentIndex = index;
+    });
+    if (_controller.isCompleted) _controller.reverse();
+
+    widget.onDestinationSelected(index);
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // List of tabs
+  Widget build(BuildContext context) {
     final tabs = [
       {
         'icon': MingCute.home_1_line,
@@ -85,55 +130,85 @@ class ScaffoldWithNavigationBar extends ConsumerWidget {
     final tabWidth = MediaQuery.of(context).size.width / tabs.length;
 
     return Scaffold(
-      body: body,
-      bottomNavigationBar: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          // Bottom Navigation Bar
-          Container(
-            padding: const EdgeInsets.only(top: 8),
-            decoration: BoxDecoration(
-              color: context.moonColors?.goku,
-              border: Border(
-                top: BorderSide(
-                  color: Colors.grey.withValues(alpha: 0.2),
+      body: AnimatedBuilder(
+        animation: _controller,
+        builder: (BuildContext context, Widget? child) {
+          return Stack(
+            children: [
+              child!,
+              // Animated Floating Action Menu
+              BottomBarActionMenuRow(
+                topPosition: _bottomBarActionMenuTopPosition.value,
+                controller: _controller,
+              ),
+              // Bottom Navigation Bar
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  padding: const EdgeInsets.only(top: 8),
+                  decoration: BoxDecoration(
+                    color: context.moonColors?.goku,
+                    border: Border(
+                      top: BorderSide(
+                        color: Colors.grey.withValues(alpha: 0.2),
+                      ),
+                    ),
+                  ),
+                  child: Row(
+                    children: tabs.asMap().entries.map((entry) {
+                      final index = entry.key;
+                      final tab = entry.value;
+
+                      if (tab.containsKey('isAddButton') &&
+                          tab['isAddButton'] == true) {
+                        return SizedBox(
+                            width: tabWidth); // Leave space for AddButton
+                      }
+
+                      return SizedBox(
+                        width: tabWidth,
+                        child: _buildNavTab(
+                          context,
+                          index,
+                          tab['icon'] as IconData,
+                          tab['selectedIcon'] as IconData,
+                          tab['label'] as String,
+                        ),
+                      );
+                    }).toList(),
+                  ),
                 ),
               ),
-            ),
-            child: Row(
-              children: tabs.asMap().entries.map((entry) {
-                final index = entry.key;
-                final tab = entry.value;
-
-                if (tab.containsKey('isAddButton') &&
-                    tab['isAddButton'] == true) {
-                  return SizedBox(width: tabWidth); // Leave space for AddButton
-                }
-
-                return SizedBox(
-                  width: tabWidth,
-                  child: _buildNavTab(
-                    context,
-                    index,
-                    tab['icon'] as IconData,
-                    tab['selectedIcon'] as IconData,
-                    tab['label'] as String,
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
-          Positioned(
-            bottom: MediaQuery.of(context).padding.bottom - 8,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: AddButton(
-                onTap: () => _handleTap(2),
+              Positioned(
+                bottom: MediaQuery.of(context).padding.bottom,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: AddButton(
+                      onTap: () {
+                        if (_currentIndex == 2) {
+                          _controller.isCompleted
+                              ? _controller.reverse()
+                              : _controller.forward();
+                          return;
+                        }
+                        _handleTap(2);
+                      },
+                      onLongTap: () {
+                        _controller.isCompleted
+                            ? _controller.reverse()
+                            : _controller.forward();
+                      },
+                      label: 'Vi',
+                      isSelected: _currentIndex == 2),
+                ),
               ),
-            ),
-          ),
-        ],
+            ],
+          );
+        },
+        child: widget.body,
       ),
     );
   }
@@ -142,7 +217,7 @@ class ScaffoldWithNavigationBar extends ConsumerWidget {
       IconData selectedIcon, String label) {
     return NavTab(
       text: label,
-      isSelected: currentIndex == index,
+      isSelected: _currentIndex == index,
       icon: FaIcon(icon, size: 24),
       selectedIcon: FaIcon(selectedIcon, size: 24),
       onTap: () => _handleTap(index),
