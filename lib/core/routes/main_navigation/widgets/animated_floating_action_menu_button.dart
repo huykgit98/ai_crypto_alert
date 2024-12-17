@@ -1,3 +1,4 @@
+import 'package:ai_crypto_alert/core/utils/vibration_util.dart';
 import 'package:flutter/material.dart';
 import 'package:moon_design/moon_design.dart';
 
@@ -10,12 +11,15 @@ class MenuItem {
 const List<MenuItem> dataSet = [
   MenuItem(text: 'Add Place', icon: Icons.location_on),
   MenuItem(text: 'Create List', icon: Icons.view_list_rounded),
-  MenuItem(text: 'Add Friend', icon: Icons.person_add_alt_1_rounded)
+  MenuItem(text: 'Add Friend', icon: Icons.person_add_alt_1_rounded),
 ];
 
 class BottomBarActionMenuRow extends StatelessWidget {
-  const BottomBarActionMenuRow(
-      {super.key, this.topPosition, required this.controller});
+  const BottomBarActionMenuRow({
+    required this.controller,
+    super.key,
+    this.topPosition,
+  });
   final double? topPosition;
   final AnimationController controller;
 
@@ -44,13 +48,18 @@ class BottomBarActionMenuRow extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: dataSet.map((item) {
-            int index = dataSet.indexOf(item);
+            final index = dataSet.indexOf(item);
             return SlideTransition(
               position: Tween<Offset>(
                 begin: Offset(0, 1.0 + (3 * index)),
                 end: const Offset(0, -0.2),
               ).animate(controller),
-              child: PIconButton(item: item),
+              child: PIconButton(
+                item: item,
+                onTap: () {
+                  print("HUYHUY tapped ${item.text}");
+                },
+              ),
             );
           }).toList(),
         ),
@@ -59,37 +68,86 @@ class BottomBarActionMenuRow extends StatelessWidget {
   }
 }
 
-class PIconButton extends StatelessWidget {
-  const PIconButton({super.key, required this.item});
+class PIconButton extends StatefulWidget {
+  const PIconButton({required this.item, required this.onTap, super.key});
   final MenuItem item;
+  final VoidCallback onTap;
+
+  @override
+  State<PIconButton> createState() => _PIconButtonState();
+}
+
+class _PIconButtonState extends State<PIconButton>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+      lowerBound: 0.85,
+    );
+
+    _scaleAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _onTap() async {
+    VibrationUtil.vibrate(context);
+
+    await _controller.reverse(); // Shrink animation
+    await _controller.forward(); // Return to normal
+    widget.onTap(); // Trigger the original callback
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          width: 50,
-          height: 50,
-          decoration: BoxDecoration(
-            color: context.moonColors?.goku,
-            shape: BoxShape.circle,
-          ),
-          child: Center(
-            child: Icon(item.icon, color: context.moonColors?.bulma, size: 24),
-          ),
+    return GestureDetector(
+      onTap: _onTap,
+      child: ScaleTransition(
+        scale: _scaleAnimation,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                color: context.moonColors?.goku,
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Icon(
+                  widget.item.icon,
+                  color: context.moonColors?.bulma,
+                  size: 24,
+                ),
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              widget.item.text,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: context.moonColors?.goten,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
-        const SizedBox(height: 4),
-        Text(
-          item.text,
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-            color: context.moonColors?.goten,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ],
+      ),
     );
   }
 }

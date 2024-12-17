@@ -15,8 +15,6 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen>
     with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  static const pageSize = 10;
-
   @override
   void initState() {
     super.initState();
