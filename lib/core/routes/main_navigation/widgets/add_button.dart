@@ -25,7 +25,7 @@ class AddButton extends StatefulWidget {
   final Color? centerIconBackgroundColor;
   final Color? centerIconForegroundColor;
   final bool showAnimatedFabMenu;
-  final bool isSelected; // Indicates selection state
+  final bool? isSelected; // Indicates selection state
 
   @override
   State<AddButton> createState() => _AddButtonState();
@@ -70,13 +70,11 @@ class _AddButtonState extends State<AddButton>
   }
 
   void _onLongPressStart(LongPressStartDetails details) {
-    Future.delayed(const Duration(milliseconds: 100), () {
-      if (widget.onLongTap != null) {
-        HapticFeedback.selectionClick();
+    if (widget.onLongTap != null) {
+      HapticFeedback.selectionClick();
 
-        widget.onLongTap?.call();
-      }
-    });
+      widget.onLongTap?.call();
+    }
     _controller.forward(); // Scale up
   }
 
@@ -87,10 +85,7 @@ class _AddButtonState extends State<AddButton>
   LinearGradient _buildGradient(BuildContext context) {
     return LinearGradient(
       colors: [
-        if (widget.isSelected)
-          context.moonColors!.frieza
-        else
-          context.moonColors!.frieza10,
+        context.moonColors!.frieza,
         context.moonColors!.whis,
       ],
       begin: Alignment.topLeft,
@@ -138,11 +133,8 @@ class _AddButtonState extends State<AddButton>
               widget.label,
               style: GoogleFonts.zillaSlab(
                 textStyle: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: widget.isSelected
-                      ? context.moonColors?.piccolo
-                      : context.moonColors?.textSecondary,
-                ),
+                    fontWeight: FontWeight.bold,
+                    color: context.moonColors?.piccolo),
               ),
             ),
           ],

@@ -87,7 +87,7 @@ GoRouter goRouter(Ref ref) {
             path.startsWith('/onboarding') ||
             path.startsWith('/signIn') ||
             path.startsWith('/signUp')) {
-          return '/chatbot';
+          return '/home';
         }
       } else {
         if (path.startsWith('/startup') ||
@@ -181,7 +181,14 @@ GoRouter goRouter(Ref ref) {
                 pageBuilder: (context, state) => const NoTransitionPage(
                   child: HomeScreen(),
                 ),
-                routes: [],
+                routes: [
+                  GoRoute(
+                    path: 'chatbot',
+                    name: AppRoute.chatbot.name,
+                    parentNavigatorKey: _rootNavigatorKey,
+                    builder: (context, state) => const ChatbotScreen(),
+                  ),
+                ],
               ),
             ],
           ),
@@ -198,19 +205,19 @@ GoRouter goRouter(Ref ref) {
               ),
             ],
           ),
-          StatefulShellBranch(
-            navigatorKey: _chatbotNavigatorKey,
-            routes: [
-              GoRoute(
-                path: '/chatbot',
-                name: AppRoute.chatbot.name,
-                pageBuilder: (context, state) => const NoTransitionPage(
-                  child: ChatbotScreen(),
-                ),
-                routes: [],
-              ),
-            ],
-          ),
+          // StatefulShellBranch(
+          //   navigatorKey: _chatbotNavigatorKey,
+          //   routes: [
+          //     GoRoute(
+          //       path: '/chatbot',
+          //       name: AppRoute.chatbot.name,
+          //       pageBuilder: (context, state) => const NoTransitionPage(
+          //         child: ChatbotScreen(),
+          //       ),
+          //       routes: [],
+          //     ),
+          //   ],
+          // ),
           StatefulShellBranch(
             navigatorKey: _budgetsNavigatorKey,
             routes: [

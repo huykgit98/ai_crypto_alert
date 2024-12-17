@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_firstmport 'package:flutter/material.dart';
+import 'package:ai_crypto_alert/core/routes/app_router.dart';
 import 'package:ai_crypto_alert/core/routes/main_navigation/widgets/widgets.dart';
 import 'package:ai_crypto_alert/l10n/l10n.dart';
 import 'package:flutter/material.dart';
@@ -113,9 +114,6 @@ class _ScaffoldWithNavigationBarState
         'label': context.l10n.transactions,
       },
       {
-        'isAddButton': true, // Mark the 3rd tab as AddButton
-      },
-      {
         'icon': MingCute.pig_money_line,
         'selectedIcon': MingCute.pig_money_fill,
         'label': context.l10n.budgets,
@@ -127,7 +125,7 @@ class _ScaffoldWithNavigationBarState
       },
     ];
 
-    final tabWidth = MediaQuery.of(context).size.width / tabs.length;
+    final tabWidth = MediaQuery.of(context).size.width / (tabs.length + 1);
 
     return Scaffold(
       body: GestureDetector(
@@ -164,27 +162,52 @@ class _ScaffoldWithNavigationBarState
                       ),
                     ),
                     child: Row(
-                      children: tabs.asMap().entries.map((entry) {
-                        final index = entry.key;
-                        final tab = entry.value;
-
-                        if (tab.containsKey('isAddButton') &&
-                            tab['isAddButton'] == true) {
-                          return SizedBox(
-                              width: tabWidth); // Leave space for AddButton
-                        }
-
-                        return SizedBox(
+                      children: [
+                        SizedBox(
                           width: tabWidth,
                           child: _buildNavTab(
                             context,
-                            index,
-                            tab['icon'] as IconData,
-                            tab['selectedIcon'] as IconData,
-                            tab['label'] as String,
+                            0,
+                            tabs[0]['icon'] as IconData,
+                            tabs[0]['selectedIcon'] as IconData,
+                            tabs[0]['label'] as String,
                           ),
-                        );
-                      }).toList(),
+                        ),
+                        SizedBox(
+                          width: tabWidth,
+                          child: _buildNavTab(
+                            context,
+                            1,
+                            tabs[1]['icon'] as IconData,
+                            tabs[1]['selectedIcon'] as IconData,
+                            tabs[1]['label'] as String,
+                          ),
+                        ),
+                        Container(
+                          color: Colors.red,
+                          width: tabWidth,
+                        ),
+                        SizedBox(
+                          width: tabWidth,
+                          child: _buildNavTab(
+                            context,
+                            2,
+                            tabs[2]['icon'] as IconData,
+                            tabs[2]['selectedIcon'] as IconData,
+                            tabs[2]['label'] as String,
+                          ),
+                        ),
+                        SizedBox(
+                          width: tabWidth,
+                          child: _buildNavTab(
+                            context,
+                            3,
+                            tabs[3]['icon'] as IconData,
+                            tabs[3]['selectedIcon'] as IconData,
+                            tabs[3]['label'] as String,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -194,22 +217,16 @@ class _ScaffoldWithNavigationBarState
                   right: 0,
                   child: Center(
                     child: AddButton(
-                        onTap: () {
-                          if (_currentIndex == 2) {
-                            _controller.isCompleted
-                                ? _controller.reverse()
-                                : _controller.forward();
-                            return;
-                          }
-                          _handleTap(2);
-                        },
-                        onLongTap: () {
-                          _controller.isCompleted
-                              ? _controller.reverse()
-                              : _controller.forward();
-                        },
-                        label: 'Vi',
-                        isSelected: _currentIndex == 2),
+                      onTap: () {
+                        context.pushNamed(AppRoute.chatbot.name);
+                      },
+                      onLongTap: () {
+                        _controller.isCompleted
+                            ? _controller.reverse()
+                            : _controller.forward();
+                      },
+                      label: 'Vi',
+                    ),
                   ),
                 ),
               ],
