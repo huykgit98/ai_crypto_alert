@@ -9,6 +9,7 @@ import 'package:ai_crypto_alert/features/transactions/transactions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:moon_design/moon_design.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:smooth_sheets/smooth_sheets.dart';
 
@@ -106,13 +107,14 @@ GoRouter goRouter(Ref ref) {
         pageBuilder: (context, state) => NoTransitionPage(
           child: AppStartupWidget(
             onLoaded: (_) => Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Colors.black,
-                    Colors.white,
+                    context.moonColors!.piccolo,
+                    context.moonColors!.jiren,
+                    context.moonColors!.chichi10,
                   ],
                 ),
               ),
