@@ -109,6 +109,9 @@ class _CoolModeState extends State<CoolMode> with TickerProviderStateMixin {
           0.7,
           0.5,
         ).toColor(),
+        type: _random.nextBool()
+            ? ParticleType.text
+            : ParticleType.icon, // Random type
       ),
     );
   }
@@ -167,6 +170,8 @@ class _CoolModeState extends State<CoolMode> with TickerProviderStateMixin {
   }
 }
 
+enum ParticleType { text, icon }
+
 class Particle {
   Particle({
     required this.position,
@@ -177,6 +182,7 @@ class Particle {
     required this.spinSpeed,
     required this.spinVal,
     required this.color,
+    this.type = ParticleType.text, // Default to text
   });
 
   Offset position;
@@ -187,6 +193,7 @@ class Particle {
   double spinSpeed;
   double spinVal;
   Color color;
+  ParticleType type;
 
   void update() {
     position = Offset(
@@ -209,16 +216,46 @@ class ParticlePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     for (final particle in particles) {
       canvas.save();
-
       canvas.translate(particle.position.dx, particle.position.dy);
       canvas.rotate(particle.spinVal * math.pi / 180);
 
-      final paint = Paint()..color = particle.color;
-      canvas.drawCircle(
-        Offset.zero,
-        particle.size / 2,
-        paint,
-      );
+      if (particle.type == ParticleType.text) {
+        // Render Dollar Sign as Text
+        final textPainter = TextPainter(
+          text: TextSpan(
+            text: '\$',
+            style: TextStyle(
+              fontSize: particle.size,
+              color: particle.color,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          textDirection: TextDirection.ltr,
+        );
+        textPainter.layout();
+        textPainter.paint(
+          canvas,
+          Offset(-textPainter.width / 2, -textPainter.height / 2),
+        );
+      } else if (particle.type == ParticleType.icon) {
+        // Render Dollar Icon
+        final iconPainter = TextPainter(
+          text: TextSpan(
+            text: String.fromCharCode(Icons.attach_money.codePoint),
+            style: TextStyle(
+              fontSize: particle.size,
+              color: particle.color,
+              fontFamily: Icons.attach_money.fontFamily,
+            ),
+          ),
+          textDirection: TextDirection.ltr,
+        );
+        iconPainter.layout();
+        iconPainter.paint(
+          canvas,
+          Offset(-iconPainter.width / 2, -iconPainter.height / 2),
+        );
+      }
 
       canvas.restore();
     }

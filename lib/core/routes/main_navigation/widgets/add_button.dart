@@ -129,12 +129,17 @@ class _AddButtonState extends State<AddButton>
               ],
             ),
             // Label
-            Text(
-              widget.label,
-              style: GoogleFonts.zillaSlab(
-                textStyle: TextStyle(
+            ShaderMask(
+              shaderCallback: (Rect bounds) =>
+                  _buildGradient(context).createShader(bounds),
+              blendMode: BlendMode.srcIn,
+              child: Text(
+                widget.label,
+                style: GoogleFonts.zillaSlab(
+                  textStyle: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: context.moonColors?.piccolo),
+                  ),
+                ),
               ),
             ),
           ],

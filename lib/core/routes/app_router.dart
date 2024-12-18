@@ -20,7 +20,6 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
 final _transactionsNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'transactions');
-final _chatbotNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'chatbot');
 final _budgetsNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'budgets');
 final _accountNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'account');
 
@@ -195,32 +194,6 @@ GoRouter goRouter(Ref ref) {
             ],
           ),
           StatefulShellBranch(
-            navigatorKey: _transactionsNavigatorKey,
-            routes: [
-              GoRoute(
-                path: '/transactions',
-                name: AppRoute.transactions.name,
-                pageBuilder: (context, state) => const NoTransitionPage(
-                  child: TransactionsScreen(),
-                ),
-                routes: [],
-              ),
-            ],
-          ),
-          // StatefulShellBranch(
-          //   navigatorKey: _chatbotNavigatorKey,
-          //   routes: [
-          //     GoRoute(
-          //       path: '/chatbot',
-          //       name: AppRoute.chatbot.name,
-          //       pageBuilder: (context, state) => const NoTransitionPage(
-          //         child: ChatbotScreen(),
-          //       ),
-          //       routes: [],
-          //     ),
-          //   ],
-          // ),
-          StatefulShellBranch(
             navigatorKey: _budgetsNavigatorKey,
             routes: [
               GoRoute(
@@ -228,6 +201,19 @@ GoRouter goRouter(Ref ref) {
                 name: AppRoute.budgets.name,
                 pageBuilder: (context, state) => const NoTransitionPage(
                   child: BudgetsScreen(),
+                ),
+                routes: [],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            navigatorKey: _transactionsNavigatorKey,
+            routes: [
+              GoRoute(
+                path: '/transactions',
+                name: AppRoute.transactions.name,
+                pageBuilder: (context, state) => const NoTransitionPage(
+                  child: TransactionsScreen(),
                 ),
                 routes: [],
               ),

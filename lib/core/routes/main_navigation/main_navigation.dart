@@ -110,14 +110,14 @@ class _ScaffoldWithNavigationBarState
         'label': context.l10n.home,
       },
       {
-        'icon': MingCute.exchange_dollar_line,
-        'selectedIcon': MingCute.exchange_dollar_fill,
-        'label': context.l10n.transactions,
-      },
-      {
         'icon': MingCute.pig_money_line,
         'selectedIcon': MingCute.pig_money_fill,
         'label': context.l10n.budgets,
+      },
+      {
+        'icon': MingCute.exchange_dollar_line,
+        'selectedIcon': MingCute.exchange_dollar_fill,
+        'label': context.l10n.transactions,
       },
       {
         'icon': MingCute.settings_1_line,
