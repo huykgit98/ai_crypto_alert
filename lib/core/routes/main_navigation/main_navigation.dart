@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_firstmport 'package:flutter/material.dart';
 import 'package:ai_crypto_alert/core/routes/app_router.dart';
 import 'package:ai_crypto_alert/core/routes/main_navigation/widgets/widgets.dart';
+import 'package:ai_crypto_alert/core/widgets/animations/celebrate.dart';
 import 'package:ai_crypto_alert/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -216,17 +217,21 @@ class _ScaffoldWithNavigationBarState
                   left: 0,
                   right: 0,
                   child: Center(
-                    child: AddButton(
-                      onTap: () {
-                        context.pushNamed(AppRoute.chatbot.name);
-                      },
-                      onLongTap: () {
-                        _controller.isCompleted
-                            ? _controller.reverse()
-                            : _controller.forward();
-                      },
-                      label: 'Vi',
+                    // child: CoolMode(
+                    child: CoolMode(
+                      child: AddButton(
+                        onTap: () {
+                          context.pushNamed(AppRoute.chatbot.name);
+                        },
+                        onLongTap: () {
+                          _controller.isCompleted
+                              ? _controller.reverse()
+                              : _controller.forward();
+                        },
+                        label: 'Vega',
+                      ),
                     ),
+                    // ),
                   ),
                 ),
               ],

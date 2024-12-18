@@ -81,7 +81,7 @@ GoRouter goRouter(Ref ref) {
         return null;
       }
       // final isLoggedIn = authRepository.currentUser != null;
-      final isLoggedIn = false;
+      final isLoggedIn = true;
 
       if (isLoggedIn) {
         if (path.startsWith('/startup') ||

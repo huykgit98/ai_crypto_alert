@@ -48,10 +48,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'No notification founded'.hardcoded,
-                      style: context.moonTypography?.heading.text16.copyWith(
-                        color: context.moonColors?.textPrimary,
+                    CoolMode(
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: Text('LONG PRESS!'),
                       ),
                     ),
                   ],
