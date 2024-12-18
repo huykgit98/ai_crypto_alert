@@ -85,10 +85,12 @@ class _CoolModeState extends State<CoolMode> with TickerProviderStateMixin {
 
   void _addParticle() {
     final List<double> sizes = [15, 18, 21, 23, 26];
-    final size = sizes[_random.nextInt(sizes.length)].toDouble();
+    final size = sizes[_random.nextInt(sizes.length)];
     final speedHorz = widget.speedHorz ?? _random.nextDouble() * 10;
-    final speedUp = widget.speedUp ?? _random.nextDouble() * 25;
-    final spinVal = _random.nextDouble() * 360;
+    final speedUp = widget.speedUp ?? (_random.nextDouble() * 25);
+
+    final spinVal = _random.nextDouble() * 0;
+
     final spinSpeed = _random.nextDouble() * 35 * (_random.nextBool() ? -1 : 1);
     final direction = _random.nextBool() ? -1 : 1;
 
@@ -200,7 +202,7 @@ class Particle {
       position.dx - speedHorz * direction,
       position.dy - speedUp,
     );
-    speedUp = math.min(size, speedUp - 1);
+    speedUp = math.min(size, speedUp - 0.1);
     spinVal += spinSpeed;
   }
 }
@@ -223,7 +225,7 @@ class ParticlePainter extends CustomPainter {
         // Render Dollar Sign as Text
         final textPainter = TextPainter(
           text: TextSpan(
-            text: '\$',
+            text: '💰',
             style: TextStyle(
               fontSize: particle.size,
               color: particle.color,
@@ -241,7 +243,7 @@ class ParticlePainter extends CustomPainter {
         // Render Dollar Icon
         final iconPainter = TextPainter(
           text: TextSpan(
-            text: String.fromCharCode(Icons.attach_money.codePoint),
+            text: String.fromCharCode(Icons.monetization_on_sharp.codePoint),
             style: TextStyle(
               fontSize: particle.size,
               color: particle.color,

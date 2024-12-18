@@ -66,21 +66,6 @@ class _ScaffoldWithNavigationBarState
     vsync: this,
   );
 
-  late final Animation<double> _rotationAngle =
-      Tween<double>(begin: 0, end: 0.5).animate(
-    CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-  );
-
-  late final Animation<Color?> _centerIconBackgroundColor = ColorTween(
-    begin: const Color(0xFFFF3841),
-    end: const Color(0xFFEAEAEA),
-  ).animate(_controller);
-
-  late final Animation<Color?> _centerIconForegroundColor = ColorTween(
-    begin: Colors.white,
-    end: Colors.black,
-  ).animate(_controller);
-
   late final Animation<double?> _bottomBarActionMenuTopPosition = Tween<double>(
     begin: 800,
     end: 600,
@@ -228,7 +213,7 @@ class _ScaffoldWithNavigationBarState
                               ? _controller.reverse()
                               : _controller.forward();
                         },
-                        label: 'Vega',
+                        label: 'Vega AI',
                       ),
                     ),
                     // ),
