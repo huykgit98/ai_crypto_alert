@@ -107,6 +107,13 @@ class _CustomSignInState extends ConsumerState<CustomSignInScreen> {
                 ),
                 child: Stack(
                   children: [
+                    const Positioned.fill(
+                      child: Particles(
+                        ease: 80,
+                        color: Colors.white,
+                        key: ValueKey(Colors.white),
+                      ),
+                    ),
                     Positioned(
                       bottom: 16,
                       left: 48,

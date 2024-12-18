@@ -57,7 +57,7 @@ class _LanguageSettingSheetState extends ConsumerState<LanguageSettingSheet>
 
     return Container(
       decoration: BoxDecoration(
-        color: context.moonColors!.gohan,
+        color: context.moonColors!.goku,
         borderRadius: const BorderRadius.vertical(
           top: Radius.circular(16),
         ),
