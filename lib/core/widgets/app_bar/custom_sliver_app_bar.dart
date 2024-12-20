@@ -23,19 +23,27 @@ class CustomSliverAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       pinned: pinned,
+      backgroundColor: context.moonColors!.gohan,
+      scrolledUnderElevation: 0,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
         title: title,
-        background: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: gradient ??
-                  [
-                    context.moonColors!.frieza60,
-                    context.moonColors!.jiren,
-                  ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
+        background: ClipRRect(
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(16),
+            bottomRight: Radius.circular(16),
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: gradient ??
+                    [
+                      context.moonColors!.frieza60,
+                      context.moonColors!.jiren,
+                    ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
             ),
           ),
         ),
