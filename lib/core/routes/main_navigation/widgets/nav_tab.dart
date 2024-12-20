@@ -82,8 +82,6 @@ class _NavTabState extends State<NavTab> with SingleTickerProviderStateMixin {
       child: Padding(
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).padding.bottom,
-
-          // top: Sizes.p8,
         ),
         child: ScaleTransition(
           scale: _scaleAnimation,

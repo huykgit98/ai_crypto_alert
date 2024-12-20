@@ -32,7 +32,6 @@ dependencies:
   cached_network_image: ^3.4.1
   flutter_riverpod: ^2.6.1
   font_awesome_flutter: ^10.8.0
-  smooth_sheets: ^0.10.2
   moon_design: ^1.0.7
   google_sign_in: ^6.2.2
   sign_in_with_apple: ^6.1.3

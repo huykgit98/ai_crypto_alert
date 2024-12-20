@@ -41,20 +41,21 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen>
             ),
           ),
           SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              sliver: SliverToBoxAdapter(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'No notification founded'.hardcoded,
-                      style: context.moonTypography?.heading.text16.copyWith(
-                        color: context.moonColors?.textPrimary,
-                      ),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            sliver: SliverToBoxAdapter(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'No notification founded'.hardcoded,
+                    style: context.moonTypography?.heading.text16.copyWith(
+                      color: context.moonColors?.textPrimary,
                     ),
-                  ],
-                ),
-              )),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

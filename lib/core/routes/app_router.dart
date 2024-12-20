@@ -11,7 +11,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:moon_design/moon_design.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:smooth_sheets/smooth_sheets.dart';
 
 part 'app_router.g.dart';
 
@@ -22,10 +21,6 @@ final _transactionsNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'transactions');
 final _budgetsNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'budgets');
 final _accountNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'account');
-
-// NavigationSheet requires a special NavigatorObserver in order to
-// smoothly change its extent during a route transition.
-final sheetTransitionObserver = NavigationSheetTransitionObserver();
 
 enum AppRoute {
   onboarding,

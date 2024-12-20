@@ -138,13 +138,18 @@ class _ScaffoldWithNavigationBarState
                   left: 0,
                   right: 0,
                   child: Container(
-                    padding: const EdgeInsets.only(top: 8),
+                    height: kBottomNavigationBarHeight +
+                        MediaQuery.of(context).padding.bottom,
                     decoration: BoxDecoration(
                       color: context.moonColors?.goku,
-                      border: Border(
-                        top: BorderSide(
-                          color: Colors.grey.withValues(alpha: 0.2),
-                        ),
+                      // border: Border(
+                      //   top: BorderSide(
+                      //     color: Colors.grey.withValues(alpha: 0.2),
+                      //   ),
+                      // ),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(24),
+                        topRight: Radius.circular(24),
                       ),
                     ),
                     child: Row(
@@ -170,7 +175,7 @@ class _ScaffoldWithNavigationBarState
                           ),
                         ),
                         Container(
-                          color: Colors.red,
+                          color: Colors.transparent,
                           width: tabWidth,
                         ),
                         SizedBox(
@@ -202,7 +207,6 @@ class _ScaffoldWithNavigationBarState
                   left: 0,
                   right: 0,
                   child: Center(
-                    // child: CoolMode(
                     child: CoolMode(
                       child: AddButton(
                         onTap: () {
@@ -216,14 +220,13 @@ class _ScaffoldWithNavigationBarState
                         label: 'Vega AI',
                       ),
                     ),
-                    // ),
                   ),
                 ),
               ],
             );
           },
-          child: Padding(
-            padding: EdgeInsets.only(
+          child: Container(
+            margin: EdgeInsets.only(
               bottom: kBottomNavigationBarHeight +
                   MediaQuery.of(context).padding.bottom,
             ),
