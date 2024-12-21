@@ -1,5 +1,6 @@
 import 'package:ai_crypto_alert/core/utils/utils.dart';
 import 'package:ai_crypto_alert/core/widgets/widgets.dart';
+import 'package:ai_crypto_alert/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moon_design/moon_design.dart';
@@ -14,8 +15,6 @@ class TransactionsScreen extends ConsumerStatefulWidget {
 class _TransactionsScreenState extends ConsumerState<TransactionsScreen>
     with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
-
-  static const pageSize = 10;
 
   @override
   void initState() {
@@ -34,13 +33,10 @@ class _TransactionsScreenState extends ConsumerState<TransactionsScreen>
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
-          CustomSliverAppBar(
-            title: Text(
-              'Transactions'.hardcoded,
-              style: context.moonTypography?.heading.text20.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+          CustomAnimatedAppBar(
+            title: context.l10n.transactions,
+            scrollController: _scrollController,
+            expandedTitle: context.l10n.transactions,
           ),
           SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),

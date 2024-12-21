@@ -1,5 +1,6 @@
 import 'package:ai_crypto_alert/core/utils/utils.dart';
 import 'package:ai_crypto_alert/core/widgets/widgets.dart';
+import 'package:ai_crypto_alert/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:moon_design/moon_design.dart';
@@ -34,13 +35,10 @@ class _BudgetsScreenState extends ConsumerState<BudgetsScreen>
       body: CustomScrollView(
         controller: _scrollController,
         slivers: [
-          CustomSliverAppBar(
-            title: Text(
-              'Budgets'.hardcoded,
-              style: context.moonTypography?.heading.text20.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+          CustomAnimatedAppBar(
+            title: context.l10n.budgets,
+            scrollController: _scrollController,
+            expandedTitle: context.l10n.budgets,
           ),
           SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),

@@ -98,19 +98,24 @@ extension GradientUtils on BuildContext {
         radius: 0.9,
         center: Alignment.topLeft,
         colors: [
-          moonColors!.frieza.withValues(alpha: 0.2),
-          moonColors!.frieza.withValues(alpha: 0.1),
-          moonColors!.frieza.withValues(alpha: 0.1),
+          moonColors!.piccolo.withValues(alpha: .2),
           moonColors!.goku.withValues(alpha: 0),
         ],
       );
 
   RadialGradient get bottomRightRadialGradient => RadialGradient(
-        radius: 0.9,
         center: Alignment.bottomRight,
         colors: [
-          moonColors!.frieza10.withValues(alpha: .3),
+          moonColors!.frieza10.withValues(alpha: .2),
           moonColors!.frieza10.withValues(alpha: .1),
+          moonColors!.goku.withValues(alpha: 0),
+        ],
+      );
+
+  RadialGradient get centerRightRadialGradient => RadialGradient(
+        center: Alignment.centerRight,
+        colors: [
+          moonColors!.piccolo.withValues(alpha: .2),
           moonColors!.goku.withValues(alpha: 0),
         ],
       );
@@ -119,7 +124,15 @@ extension GradientUtils on BuildContext {
         radius: 0.8,
         center: Alignment.topCenter,
         colors: [
-          moonColors!.frieza60,
+          moonColors!.piccolo.withValues(alpha: .2),
+          moonColors!.goku.withValues(alpha: 0),
+        ],
+      );
+
+  RadialGradient get bottomCenterRadialGradient => RadialGradient(
+        center: Alignment.bottomCenter,
+        colors: [
+          moonColors!.piccolo.withValues(alpha: .2),
           moonColors!.goku.withValues(alpha: 0),
         ],
       );

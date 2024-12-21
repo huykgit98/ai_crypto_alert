@@ -15,6 +15,7 @@ class CustomAnimatedAppBar extends HookWidget {
     this.scrollController,
     this.onBackButtonPressed,
     this.gradientBackground,
+    this.pinned = true,
   });
 
   final String title;
@@ -27,6 +28,7 @@ class CustomAnimatedAppBar extends HookWidget {
   final ScrollController? scrollController;
   final VoidCallback? onBackButtonPressed;
   final Gradient? gradientBackground;
+  final bool pinned;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +52,7 @@ class CustomAnimatedAppBar extends HookWidget {
       expandedHeight: expandedHeight,
       collapsedHeight: collapsedHeight,
       centerTitle: true,
-      pinned: true,
+      pinned: pinned,
       title: AnimatedOpacity(
         duration: const Duration(milliseconds: 200),
         opacity: isCollapsed.value ? 1 : 0,
@@ -100,8 +102,7 @@ class CustomAnimatedAppBar extends HookWidget {
                   ),
                 ),
               ),
-            if (expandedTitle != null &&
-                expandedTitle!.isEmpty &&
+            if ((expandedTitle == null || expandedTitle!.isEmpty) &&
                 flexibleSpaceContent != null)
               flexibleSpaceContent!,
           ],
