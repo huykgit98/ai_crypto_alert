@@ -31,32 +31,42 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        controller: _scrollController,
-        slivers: [
-          CustomSliverAppBar(
-            title: Text(
-              'Home'.hardcoded,
-              style: context.moonTypography?.heading.text20.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: context.topCenterRadialGradient,
             ),
           ),
-          SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              sliver: SliverToBoxAdapter(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CoolMode(
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: Text('LONG PRESS!'),
-                      ),
-                    ),
-                  ],
+          CustomScrollView(
+            controller: _scrollController,
+            slivers: [
+              CustomSliverAppBar(
+                title: Text(
+                  'Home'.hardcoded,
+                  style: context.moonTypography?.heading.text20.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              )),
+              ),
+              SliverPadding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  sliver: SliverToBoxAdapter(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CoolMode(
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: Text('LONG PRESS!'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )),
+            ],
+          ),
         ],
       ),
     );

@@ -119,7 +119,7 @@ extension GradientUtils on BuildContext {
         radius: 0.8,
         center: Alignment.topCenter,
         colors: [
-          moonColors!.frieza10,
+          moonColors!.frieza60,
           moonColors!.goku.withValues(alpha: 0),
         ],
       );

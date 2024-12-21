@@ -3,6 +3,7 @@ export 'adaptive_dropdown.dart';
 export 'alert_notification.dart';
 export 'animations/animated_check.dart';
 export 'animations/animations.dart';
+export 'app_bar/custom_animated_sliver_appbar.dart';
 export 'app_bar/custom_sliver_app_bar.dart';
 export 'background/beam_explosion_background.dart';
 export 'background/cosmic_gradient_background.dart';

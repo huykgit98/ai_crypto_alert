@@ -30,17 +30,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     return CustomScrollView(
       controller: _scrollController,
       slivers: [
-        CustomSliverAppBar(
-          title: Text(
-            context.l10n.settings,
-            style: context.moonTypography?.heading.text20
-                .copyWith(fontWeight: FontWeight.bold),
-          ),
+        CustomAnimatedAppBar(
+          title: context.l10n.settings,
+          scrollController: _scrollController,
+          expandedTitle: context.l10n.settings,
         ),
         SliverList(
           delegate: SliverChildListDelegate(
             [
-              const SizedBox(height: 16),
+              gapH16,
               _buildSection(
                 title: context.l10n.account,
                 items: [
