@@ -34,7 +34,7 @@ class _ChatbotScreenState extends ConsumerState<ChatbotScreen>
         slivers: [
           CustomSliverAppBar(
             title: Text(
-              'Chatbot'.hardcoded,
+              'AI Buddy'.hardcoded,
               style: context.moonTypography?.heading.text20.copyWith(
                 fontWeight: FontWeight.bold,
               ),

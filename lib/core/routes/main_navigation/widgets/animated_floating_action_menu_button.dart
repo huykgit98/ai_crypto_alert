@@ -1,5 +1,6 @@
 import 'package:ai_crypto_alert/core/utils/vibration_util.dart';
 import 'package:flutter/material.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:moon_design/moon_design.dart';
 
 class MenuItem {
@@ -8,10 +9,10 @@ class MenuItem {
   final IconData icon;
 }
 
-const List<MenuItem> dataSet = [
-  MenuItem(text: 'Add Place', icon: Icons.location_on),
-  MenuItem(text: 'Create List', icon: Icons.view_list_rounded),
-  MenuItem(text: 'Add Friend', icon: Icons.person_add_alt_1_rounded),
+List<MenuItem> dataSet = [
+  const MenuItem(text: 'Thêm ngân sách', icon: MingCute.currency_dollar_2_line),
+  const MenuItem(text: 'Ghi chép GD', icon: MingCute.edit_4_line),
+  const MenuItem(text: 'Thêm danh mục', icon: MingCute.list_ordered_line),
 ];
 
 class BottomBarActionMenuRow extends StatelessWidget {
