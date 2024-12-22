@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:moon_design/moon_design.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -15,11 +16,42 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen>
     with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
-
-  // Simulated premium status (replace this with actual logic)
   final bool isPremium = false;
+  final premiumCardHeight = kToolbarHeight;
 
-  final premiumCardHeight = kToolbarHeight; // Height of the premium card
+  bool isPremiumCardVisible = true;
+
+  @override
+  void initState() {
+    super.initState();
+    // _checkPremiumCardVisibility();
+  }
+
+  Future<void> _checkPremiumCardVisibility() async {
+    final prefs = await SharedPreferences.getInstance();
+    final closeTimestamp = prefs.getInt('premiumCardClosedAt');
+
+    if (closeTimestamp != null) {
+      final now = DateTime.now();
+      final closedAt = DateTime.fromMillisecondsSinceEpoch(closeTimestamp);
+      final difference = now.difference(closedAt).inDays;
+
+      if (difference < 2) {
+        setState(() {
+          isPremiumCardVisible = false;
+        });
+      }
+    }
+  }
+
+  Future<void> _hidePremiumCard() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(
+        'premiumCardClosedAt', DateTime.now().millisecondsSinceEpoch);
+    setState(() {
+      isPremiumCardVisible = false;
+    });
+  }
 
   @override
   void dispose() {
@@ -32,10 +64,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
     return Scaffold(
       body: Stack(
         children: [
+          // Background gradients
           Container(
             decoration: BoxDecoration(
               gradient: RadialGradient(
-                radius: 0.9,
+                radius: 1.5,
                 center: Alignment.topLeft,
                 colors: [
                   context.moonColors!.piccolo.withValues(alpha: .2),
@@ -47,7 +80,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           Container(
             decoration: BoxDecoration(
               gradient: RadialGradient(
-                radius: 0.9,
                 center: Alignment.centerRight,
                 colors: [
                   context.moonColors!.piccolo.withValues(alpha: .2),
@@ -56,7 +88,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               ),
             ),
           ),
-
           Container(
             decoration: BoxDecoration(
               gradient: RadialGradient(
@@ -76,15 +107,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                 title: context.l10n.home,
                 scrollController: _scrollController,
                 expandedHeight: kToolbarHeight + 50,
+                showCollapsedAppBar: false,
                 flexibleSpaceContent: Padding(
                   padding: const EdgeInsets.only(
                       top: kToolbarHeight, left: 16, right: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Text(
                         'Hey Negan',
-                        style: context.moonTypography?.heading.text20,
+                        style: context.moonTypography?.heading.text24.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SizedBox(height: 16),
                       Text(
@@ -104,38 +139,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   ),
                 ),
               ),
-              // SliverPadding(
-              //   padding: const EdgeInsets.only(top: kToolbarHeight),
-              //   sliver: SliverToBoxAdapter(
-              //     child: Padding(
-              //       padding: const EdgeInsets.symmetric(
-              //           horizontal: 16, vertical: 16),
-              //       child: Column(
-              //         crossAxisAlignment: CrossAxisAlignment.start,
-              //         children: [
-              //           Text(
-              //             'Hey Negan',
-              //             style: context.moonTypography?.heading.text24,
-              //           ),
-              //           const SizedBox(height: 16),
-              //           Text(
-              //             'Welcome to AI Crypto Alert',
-              //             style: context.moonTypography?.body.text14.copyWith(
-              //               color: context.moonColors?.textSecondary,
-              //             ),
-              //           ),
-              //           const SizedBox(height: 8),
-              //           Text(
-              //             'Get real-time alerts on your favorite cryptocurrencies',
-              //             style: context.moonTypography?.body.text14.copyWith(
-              //               color: context.moonColors?.textSecondary,
-              //             ),
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // ),
               SliverPadding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -158,8 +161,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   childCount: 20,
                 ),
               ),
-              // Only add padding if the user is not premium
-              if (!isPremium)
+              if (!isPremium && isPremiumCardVisible)
                 SliverPadding(
                   padding: EdgeInsets.only(bottom: premiumCardHeight + 8),
                   sliver: const SliverToBoxAdapter(
@@ -169,45 +171,60 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
             ],
           ),
 
-          // Show "Get Premium" card only if the user is not premium
-          if (!isPremium)
+          if (!isPremium && isPremiumCardVisible) ...[
             Positioned(
-                bottom: 8,
-                left: 8,
-                right: 8,
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        context.moonColors!.piccolo,
-                        context.moonColors!.chichi,
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: context.moonColors!.jiren,
-                        blurRadius: 8,
-                        offset: const Offset(0, 4),
-                      ),
+              bottom: 8,
+              left: 8,
+              right: 8,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      context.moonColors!.piccolo,
+                      context.moonColors!.chichi,
                     ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
-                  child: MoonMenuItem(
-                    backgroundColor: Colors.transparent,
-                    onTap: () {},
-                    label: Text(
-                      'Get premium to unlock more features',
-                      style: context.moonTypography?.body.text14.copyWith(
-                        color: context.moonColors?.goten,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: context.moonColors!.jiren,
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
                     ),
-                    leading:
-                        const Icon(MingCute.gift_2_fill, color: Colors.white),
+                  ],
+                ),
+                child: MoonMenuItem(
+                  backgroundColor: Colors.transparent,
+                  onTap: () {
+                    print("HUYHUY Premium card tapped");
+                  },
+                  label: Text(
+                    'Get premium to unlock more features',
+                    style: context.moonTypography?.body.text14.copyWith(
+                      color: context.moonColors?.goten,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                )),
+                  leading:
+                      const Icon(MingCute.gift_2_fill, color: Colors.white),
+                ),
+              ),
+            ),
+            Positioned(
+              right: 0,
+              bottom: premiumCardHeight - 8,
+              child: GestureDetector(
+                onTap: _hidePremiumCard,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.all(8), // Padding for better touch area
+                  child: Icon(Icons.close, color: context.moonColors!.trunks),
+                ),
+              ),
+            ),
+          ],
         ],
       ),
     );

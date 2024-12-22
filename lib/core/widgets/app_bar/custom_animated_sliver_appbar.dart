@@ -16,6 +16,7 @@ class CustomAnimatedAppBar extends HookWidget {
     this.onBackButtonPressed,
     this.gradientBackground,
     this.pinned = true,
+    this.showCollapsedAppBar = true,
   });
 
   final String title;
@@ -29,6 +30,7 @@ class CustomAnimatedAppBar extends HookWidget {
   final VoidCallback? onBackButtonPressed;
   final Gradient? gradientBackground;
   final bool pinned;
+  final bool showCollapsedAppBar;
 
   @override
   Widget build(BuildContext context) {
@@ -55,16 +57,16 @@ class CustomAnimatedAppBar extends HookWidget {
       pinned: pinned,
       title: AnimatedOpacity(
         duration: const Duration(milliseconds: 200),
-        opacity: isCollapsed.value ? 1 : 0,
+        opacity: isCollapsed.value && showCollapsedAppBar ? 1 : 0,
         child: Text(
           title,
-          style: context.moonTypography?.heading.text20.copyWith(
+          style: context.moonTypography?.heading.text18.copyWith(
             fontWeight: FontWeight.bold,
           ),
         ),
       ),
       backgroundColor: context.moonColors?.goku.withValues(
-        alpha: isCollapsed.value ? 1 : 0,
+        alpha: isCollapsed.value && showCollapsedAppBar ? 1 : 0,
       ),
       scrolledUnderElevation: 0,
       leading: leading,
@@ -84,7 +86,7 @@ class CustomAnimatedAppBar extends HookWidget {
                       ],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      stops: const [0.0, 0.2, 0.5, 1.0],
+                      stops: const [0.0, 0.4, 0.6, 1.0],
                     ),
               ),
             ),
