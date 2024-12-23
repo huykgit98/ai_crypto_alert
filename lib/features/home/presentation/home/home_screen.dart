@@ -67,29 +67,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
       body: Stack(
         children: [
           // Background gradients
-          Container(
-            decoration: BoxDecoration(
-              gradient: RadialGradient(
-                radius: 1.5,
-                center: Alignment.topLeft,
-                colors: [
-                  context.moonColors!.piccolo.withValues(alpha: .2),
-                  context.moonColors!.goku.withValues(alpha: 0),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              gradient: RadialGradient(
-                center: Alignment.centerRight,
-                colors: [
-                  context.moonColors!.piccolo.withValues(alpha: .2),
-                  context.moonColors!.goku.withValues(alpha: 0),
-                ],
-              ),
-            ),
-          ),
+
           Container(
             decoration: BoxDecoration(
               gradient: RadialGradient(

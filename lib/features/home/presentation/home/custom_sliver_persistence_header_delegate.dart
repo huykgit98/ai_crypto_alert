@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'package:ai_crypto_alert/core/utils/lottie_decoder.dart';
 import 'package:ai_crypto_alert/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:lottie/lottie.dart';
 import 'package:moon_design/moon_design.dart';
 
@@ -109,11 +110,27 @@ class CustomSliverPersistentHeaderDelegate
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Income',
-                        style: context.moonTypography?.body.text16.copyWith(
-                          color: context.moonColors!.textSecondary,
-                        ),
+                      Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: context.moonColors!.roshi10,
+                            ),
+                            child: Icon(MingCute.up_small_fill,
+                                // Icons.arrow_drop_up_rounded,
+                                size: 24,
+                                color: context.moonColors!.roshi),
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            'Income',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: context.moonColors!.textSecondary,
+                            ),
+                          ),
+                        ],
                       ),
                       Text(
                         '\$10000000',
@@ -127,11 +144,27 @@ class CustomSliverPersistentHeaderDelegate
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Expenses',
-                        style: context.moonTypography?.body.text16.copyWith(
-                          color: context.moonColors!.textSecondary,
-                        ),
+                      Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: context.moonColors!.chichi10,
+                            ),
+                            child: Icon(MingCute.down_small_fill,
+                                // Icons.arrow_drop_up_rounded,
+                                size: 24,
+                                color: context.moonColors!.chichi),
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            'Expenses',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: context.moonColors!.textSecondary,
+                            ),
+                          ),
+                        ],
                       ),
                       Text(
                         '\$10000000',
