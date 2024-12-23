@@ -1,5 +1,5 @@
 import 'package:ai_crypto_alert/core/widgets/widgets.dart';
-import 'package:ai_crypto_alert/l10n/l10n.dart';
+import 'package:ai_crypto_alert/features/home/presentation/home/custom_sliver_persistence_header_delegate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -24,7 +24,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   @override
   void initState() {
     super.initState();
-    // _checkPremiumCardVisibility();
+    _checkPremiumCardVisibility();
   }
 
   Future<void> _checkPremiumCardVisibility() async {
@@ -61,6 +61,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    final statusBarHeight = MediaQuery.of(context).padding.top;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -103,40 +105,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           CustomScrollView(
             controller: _scrollController,
             slivers: [
-              CustomAnimatedAppBar(
-                title: context.l10n.home,
-                scrollController: _scrollController,
-                expandedHeight: kToolbarHeight + 50,
-                showCollapsedAppBar: false,
-                flexibleSpaceContent: Padding(
-                  padding: const EdgeInsets.only(
-                      top: kToolbarHeight, left: 16, right: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        'Hey Negan',
-                        style: context.moonTypography?.heading.text24.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'Welcome to AI Crypto Alert',
-                        style: context.moonTypography?.body.text14.copyWith(
-                          color: context.moonColors?.textSecondary,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Get real-time alerts on your favorite cryptocurrencies',
-                        style: context.moonTypography?.body.text12.copyWith(
-                          color: context.moonColors?.textSecondary,
-                        ),
-                      ),
-                    ],
-                  ),
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: CustomSliverPersistentHeaderDelegate(
+                  statusBarHeight: statusBarHeight, // Pass status bar height
                 ),
               ),
               SliverPadding(
