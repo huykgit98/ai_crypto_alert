@@ -34,10 +34,13 @@ class CustomSliverPersistentHeaderDelegate
     final horizontalPadding = ui.lerpDouble(16, 0, t) ?? 0;
     final incomeExpensesOpacity = (1 - t).clamp(0.0, 1.0);
     final incomeExpensesScale = (1 - t).clamp(0.0, 1.0);
-    final totalBalanceTop = ui.lerpDouble(110, 8, t) ?? 8;
+    final incomeExpensesLeft = ui.lerpDouble(48, 32, t) ?? 24;
+    final incomeExpensesBottom = ui.lerpDouble(48, 0, t) ?? 24;
+
+    final totalBalanceBottom = ui.lerpDouble(deltaExtent - 60, 8, t) ?? 8;
     final totalBalanceLeft = ui.lerpDouble(48, 32, t) ?? 24;
-    final accountInfoTop = ui.lerpDouble(110, 16, t) ?? 8;
-    final accountInfoRight = ui.lerpDouble(48, 32, t) ?? 24;
+
+    final cardBottom = ui.lerpDouble(16, 0, t) ?? 24;
 
     return Stack(
       fit: StackFit.expand,
@@ -48,7 +51,8 @@ class CustomSliverPersistentHeaderDelegate
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                context.moonColors!.piccolo,
+                context.moonColors!.frieza60,
+                context.moonColors!.frieza60,
                 context.moonColors!.goku.withValues(alpha: 0),
               ],
             ),
@@ -57,7 +61,7 @@ class CustomSliverPersistentHeaderDelegate
         Positioned(
           left: horizontalPadding,
           right: horizontalPadding,
-          bottom: 0,
+          bottom: cardBottom,
           child: Container(
             height: deltaExtent,
             decoration: BoxDecoration(
@@ -67,8 +71,24 @@ class CustomSliverPersistentHeaderDelegate
           ),
         ),
         Positioned(
+          left: horizontalPadding,
+          right: horizontalPadding,
+          bottom: 0,
+          child: Transform.scale(
+            scale: incomeExpensesScale,
+            child: Opacity(
+              opacity: incomeExpensesOpacity,
+              child: const MoonDotIndicator(
+                size: 8,
+                selectedDot: 1,
+                dotCount: 5,
+              ),
+            ),
+          ),
+        ),
+        Positioned(
           left: totalBalanceLeft,
-          bottom: totalBalanceTop,
+          bottom: totalBalanceBottom,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -91,14 +111,27 @@ class CustomSliverPersistentHeaderDelegate
           ),
         ),
         Positioned(
-          right: accountInfoRight,
-          bottom: accountInfoTop,
+          right: totalBalanceLeft,
+          bottom: totalBalanceBottom,
           child: Row(
             children: [
-              Icon(
-                MingCute.wallet_5_fill,
-                size: ui.lerpDouble(24, 20, t),
-                color: context.moonColors!.textSecondary,
+              ShaderMask(
+                shaderCallback: (Rect bounds) {
+                  return LinearGradient(
+                    colors: [
+                      context.moonColors!.frieza,
+                      context.moonColors!.whis,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ).createShader(bounds);
+                },
+                child: Icon(
+                  MingCute.wallet_5_fill,
+                  size: ui.lerpDouble(24, 20, t),
+                  color: Colors
+                      .white, // Set the icon color to white to apply the gradient
+                ),
               ),
               const SizedBox(width: 4),
               Text(
@@ -113,9 +146,9 @@ class CustomSliverPersistentHeaderDelegate
           ),
         ),
         Positioned(
-          left: 48,
-          right: 48,
-          bottom: 24,
+          left: incomeExpensesLeft,
+          right: incomeExpensesLeft,
+          bottom: incomeExpensesBottom,
           child: Transform.scale(
             scale: incomeExpensesScale,
             child: Opacity(
@@ -200,53 +233,50 @@ class CustomSliverPersistentHeaderDelegate
         ),
         Positioned(
           left: 16,
-          right: 0,
-          top: 32,
+          top: MediaQuery.of(context).padding.top,
           child: Transform.scale(
             scale: incomeExpensesScale,
             child: Opacity(
               opacity: incomeExpensesOpacity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text.rich(
-                        TextSpan(
-                          text: 'Good morning, ',
-                          style: context.moonTypography?.body.text18.copyWith(
-                            color: context.moonColors!.goten,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: 'Negan',
-                              style:
-                                  context.moonTypography?.body.text18.copyWith(
-                                color: context.moonColors!.goten,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            TextSpan(
-                              text: '!',
-                              style:
-                                  context.moonTypography?.body.text18.copyWith(
-                                color: context.moonColors!.goten,
-                              ),
-                            ),
-                          ],
-                        ),
+              child: Text.rich(
+                TextSpan(
+                  text: 'Good morning, ',
+                  style: context.moonTypography?.body.text18.copyWith(
+                    color: context.moonColors!.goten,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: 'Negan',
+                      style: context.moonTypography?.body.text18.copyWith(
+                        color: context.moonColors!.goten,
+                        fontWeight: FontWeight.bold,
                       ),
-                    ],
-                  ),
-                  Lottie.asset(
-                    Assets.lotties.eRoboWaving,
-                    width: 120,
-                    height: 120,
-                    fit: BoxFit.contain,
-                    decoder: customLottieDecoder,
-                  ),
-                ],
+                    ),
+                    TextSpan(
+                      text: '!',
+                      style: context.moonTypography?.body.text18.copyWith(
+                        color: context.moonColors!.goten,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          right: 0,
+          top: 24,
+          child: Transform.scale(
+            scale: incomeExpensesScale,
+            child: Opacity(
+              opacity: incomeExpensesOpacity,
+              child: Lottie.asset(
+                Assets.lotties.eRoboWaving,
+                width: 120,
+                height: 120,
+                fit: BoxFit.contain,
+                decoder: customLottieDecoder,
               ),
             ),
           ),

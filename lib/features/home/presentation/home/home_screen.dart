@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:ai_crypto_alert/features/home/presentation/home/custom_sliver_persistence_header_delegate.dart';
 import 'package:ai_crypto_alert/features/home/presentation/widgets/app_bar/notification_handler.dart';
 import 'package:ai_crypto_alert/features/home/presentation/widgets/widgets.dart';
@@ -64,7 +62,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   Widget build(BuildContext context) {
     final statusBarHeight = MediaQuery.of(context).padding.top;
     minExtent = kToolbarHeight + statusBarHeight;
-    maxExtent = Platform.isAndroid ? 280 : 300;
+    maxExtent = 300;
 
     return Scaffold(
       body: Stack(
