@@ -59,6 +59,8 @@ dependencies:
   share_plus: ^10.1.2
   collection: ^1.18.0
   sensors_plus: ^6.1.1
+  custom_sliding_segmented_control: ^1.8.4
+  fl_chart: ^0.70.0
 
 dev_dependencies:
   flutter_test:

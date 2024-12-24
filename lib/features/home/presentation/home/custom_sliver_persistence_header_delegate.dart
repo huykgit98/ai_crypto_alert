@@ -198,13 +198,13 @@ class CustomSliverPersistentHeaderDelegate
                       Text(
                         'Welcome back!',
                         style: context.moonTypography?.body.text16.copyWith(
-                          color: context.moonColors!.textPrimary,
+                          color: context.moonColors!.goten,
                         ),
                       ),
                       Text(
                         'Negan',
                         style: context.moonTypography?.body.text24.copyWith(
-                          color: context.moonColors!.textPrimary,
+                          color: context.moonColors!.goten,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
