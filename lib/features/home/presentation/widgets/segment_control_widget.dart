@@ -1,6 +1,9 @@
+import 'package:ai_crypto_alert/core/utils/utils.dart';
+import 'package:ai_crypto_alert/features/home/presentation/widgets/widgets.dart';
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:moon_design/moon_design.dart';
 
 class SegmentControlWidget extends StatefulWidget {
   const SegmentControlWidget({Key? key}) : super(key: key);
@@ -193,145 +196,40 @@ class _SegmentControlWidgetState extends State<SegmentControlWidget> {
     );
   }
 
-  Widget _buildPieChart() {
-    final sections = chartData[selectedSegment]?[selectedTab] ?? [];
-    return Container(
-      padding: const EdgeInsets.all(16),
-      height: 200,
-      child: PieChart(
-        PieChartData(
-          sections: sections,
-          centerSpaceRadius: 40,
-          sectionsSpace: 2,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTabContent() {
-    final items = tabContentData[selectedSegment]?[selectedTab] ?? [];
-
-    return Column(
-      children: items.map((item) {
-        return ListTile(
-          leading: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: Colors.orange.shade100,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              item['icon'] as IconData,
-              color: Colors.orange,
-            ),
-          ),
-          title: Text(item['label'] as String),
-          trailing: Text(
-            item['amount'] as String,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          onTap: () {
-            print('Tapped on ${item['label']}');
-          },
-        );
-      }).toList(),
-    );
-  }
-
-  Widget _buildTabSwitcher() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              selectedTab = 0;
-            });
-          },
-          child: Column(
-            children: [
-              Text(
-                'Danh mục con',
-                style: TextStyle(
-                  color: selectedTab == 0 ? Colors.pink : Colors.grey,
-                  fontWeight:
-                      selectedTab == 0 ? FontWeight.bold : FontWeight.normal,
-                ),
-              ),
-              if (selectedTab == 0)
-                Container(
-                  height: 2,
-                  width: 40,
-                  color: Colors.pink,
-                ),
-            ],
-          ),
-        ),
-        const SizedBox(width: 16),
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              selectedTab = 1;
-            });
-          },
-          child: Column(
-            children: [
-              Text(
-                'Danh mục cha',
-                style: TextStyle(
-                  color: selectedTab == 1 ? Colors.pink : Colors.grey,
-                  fontWeight:
-                      selectedTab == 1 ? FontWeight.bold : FontWeight.normal,
-                ),
-              ),
-              if (selectedTab == 1)
-                Container(
-                  height: 2,
-                  width: 40,
-                  color: Colors.pink,
-                ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         CustomSlidingSegmentedControl<int>(
           fromMax: true,
-          innerPadding: const EdgeInsets.all(4),
-          children: const {
+          innerPadding: const EdgeInsets.all(8),
+          isStretch: true,
+          children: {
             1: Text(
-              'Income',
+              'Income'.hardcoded,
               textAlign: TextAlign.center,
+              style: context.moonTypography?.heading.text14.copyWith(
+                color: context.moonColors?.textPrimary,
+              ),
             ),
             2: Text(
-              'Expenses',
+              'Expenses'.hardcoded,
               textAlign: TextAlign.center,
+              style: context.moonTypography?.heading.text14.copyWith(
+                color: context.moonColors?.textPrimary,
+              ),
             ),
           },
           decoration: BoxDecoration(
-            color: Colors.grey.shade200,
+            color: context.moonColors?.goku,
             borderRadius: BorderRadius.circular(16),
           ),
           thumbDecoration: BoxDecoration(
-            color: Colors.greenAccent,
+            color: context.moonColors?.gohan,
             borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(.3),
-                blurRadius: 4,
-                spreadRadius: 1,
-                offset: const Offset(0, 2),
-              ),
-            ],
           ),
           onValueChanged: (int value) {
+            VibrationUtil.vibrate(context);
             setState(() {
               selectedSegment = value;
               selectedTab = 0; // Reset to first tab
@@ -339,11 +237,23 @@ class _SegmentControlWidgetState extends State<SegmentControlWidget> {
           },
         ),
         const SizedBox(height: 60),
-        _buildPieChart(),
+        PieChartWidget(
+          sections: chartData[selectedSegment]?[selectedTab] ?? [],
+        ),
         const SizedBox(height: 60),
-        _buildTabSwitcher(),
+        TabSwitcherWidget(
+          selectedTab: selectedTab,
+          onTabSelected: (int value) {
+            VibrationUtil.vibrate(context);
+            setState(() {
+              selectedTab = value;
+            });
+          },
+        ),
         const SizedBox(height: 32),
-        _buildTabContent(),
+        TabContentWidget(
+          items: tabContentData[selectedSegment]?[selectedTab] ?? [],
+        ),
       ],
     );
   }

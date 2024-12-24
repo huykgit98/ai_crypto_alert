@@ -63,7 +63,7 @@ class CustomSliverPersistentHeaderDelegate
             decoration: BoxDecoration(
               color: context.moonColors!.goku,
               borderRadius: const BorderRadius.all(
-                Radius.circular(32), // Always rounded
+                Radius.circular(16), // Always rounded
               ),
             ),
           ),
