@@ -43,13 +43,17 @@ class _AppBarScrollHandlerState extends State<AppBarScrollHandler> {
   }
 
   void reverseDirectionHandler() {
-    if (t >= 0.15) return animateTo(widget.maxExtent - widget.minExtent);
+    if (t >= 0.15) {
+      return animateTo(widget.maxExtent - widget.minExtent);
+    }
 
     animateTo(0);
   }
 
   void forwardDirectionHandler() {
-    if (t <= 0.85) return animateTo(0);
+    if (t <= 0.85) {
+      return animateTo(0);
+    }
 
     animateTo(widget.minExtent);
   }

@@ -1,7 +1,8 @@
-import 'dart:math' as math;
+import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:ai_crypto_alert/core/utils/lottie_decoder.dart';
+import 'package:ai_crypto_alert/features/home/presentation/widgets/app_bar/notification_handler.dart';
 import 'package:ai_crypto_alert/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -10,39 +11,37 @@ import 'package:moon_design/moon_design.dart';
 
 class CustomSliverPersistentHeaderDelegate
     extends SliverPersistentHeaderDelegate {
-  CustomSliverPersistentHeaderDelegate({required this.statusBarHeight});
-  final double statusBarHeight;
+  CustomSliverPersistentHeaderDelegate({
+    required this.minExtent,
+    required this.maxExtent,
+  });
+
+  @override
+  final double minExtent;
+  @override
+  final double maxExtent;
+
+  double get deltaExtent => maxExtent - minExtent;
 
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    // Interpolation factor
-    final t = shrinkOffset / (maxExtent - minExtent);
-
-    // Dynamically interpolate height and horizontal padding
-    final currentHeight = math.max(
-      kToolbarHeight + statusBarHeight,
-      ui.lerpDouble(200, kToolbarHeight + statusBarHeight, t) ?? kToolbarHeight,
-    );
+    final currentExtent = max(minExtent, maxExtent - shrinkOffset);
+    final t =
+        ui.clampDouble(1.0 - (currentExtent - minExtent) / deltaExtent, 0, 1);
+    CollapsingNotification(t).dispatch(context);
 
     final horizontalPadding = ui.lerpDouble(16, 0, t) ?? 0;
-
-    // Clamp opacity and scale for Income and Expenses
     final incomeExpensesOpacity = (1 - t).clamp(0.0, 1.0);
     final incomeExpensesScale = (1 - t).clamp(0.0, 1.0);
-
-    // Dynamically interpolate position and scaling for Total Balance
-    final totalBalanceTop = ui.lerpDouble(statusBarHeight + 60, 48, t) ?? 8;
+    final totalBalanceTop = ui.lerpDouble(110, 8, t) ?? 8;
     final totalBalanceLeft = ui.lerpDouble(48, 32, t) ?? 24;
-
-    // Dynamically interpolate position and scaling for Account info
-    final accountInfoTop = ui.lerpDouble(statusBarHeight + 60, 48, t) ?? 8;
+    final accountInfoTop = ui.lerpDouble(110, 16, t) ?? 8;
     final accountInfoRight = ui.lerpDouble(48, 32, t) ?? 24;
 
     return Stack(
       fit: StackFit.expand,
       children: [
-        // Background gradient
         Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -55,26 +54,18 @@ class CustomSliverPersistentHeaderDelegate
             ),
           ),
         ),
-
-        // Red container for the header background
         Positioned(
           left: horizontalPadding,
           right: horizontalPadding,
-          bottom: 0, // Stick to the bottom of the header
+          bottom: 0,
           child: Container(
-            // duration: Duration.zero, // Instant update
-
-            height: currentHeight,
+            height: deltaExtent,
             decoration: BoxDecoration(
               color: context.moonColors!.goku,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(16), // Always rounded
-              ),
+              borderRadius: const BorderRadius.all(Radius.circular(16)),
             ),
           ),
         ),
-
-        // Total Balance with dynamic position and scale
         Positioned(
           left: totalBalanceLeft,
           bottom: totalBalanceTop,
@@ -99,8 +90,6 @@ class CustomSliverPersistentHeaderDelegate
             ],
           ),
         ),
-
-        // Account Info with dynamic position and scale
         Positioned(
           right: accountInfoRight,
           bottom: accountInfoTop,
@@ -111,9 +100,7 @@ class CustomSliverPersistentHeaderDelegate
                 size: ui.lerpDouble(24, 20, t),
                 color: context.moonColors!.textSecondary,
               ),
-              const SizedBox(
-                width: 4,
-              ),
+              const SizedBox(width: 4),
               Text(
                 'All Accounts',
                 style: TextStyle(
@@ -125,16 +112,14 @@ class CustomSliverPersistentHeaderDelegate
             ],
           ),
         ),
-
-        // Income and Expenses Section
         Positioned(
           left: 48,
           right: 48,
-          bottom: 32, // Stick to the bottom of the header
+          bottom: 24,
           child: Transform.scale(
-            scale: incomeExpensesScale, // Scale dynamically
+            scale: incomeExpensesScale,
             child: Opacity(
-              opacity: incomeExpensesOpacity, // Fading effect
+              opacity: incomeExpensesOpacity,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -148,10 +133,11 @@ class CustomSliverPersistentHeaderDelegate
                               shape: BoxShape.circle,
                               color: context.moonColors!.roshi10,
                             ),
-                            child: Icon(MingCute.up_small_fill,
-                                // Icons.arrow_drop_up_rounded,
-                                size: 24,
-                                color: context.moonColors!.roshi),
+                            child: Icon(
+                              MingCute.up_small_fill,
+                              size: 24,
+                              color: context.moonColors!.roshi,
+                            ),
                           ),
                           const SizedBox(width: 4),
                           Text(
@@ -182,10 +168,11 @@ class CustomSliverPersistentHeaderDelegate
                               shape: BoxShape.circle,
                               color: context.moonColors!.chichi10,
                             ),
-                            child: Icon(MingCute.down_small_fill,
-                                // Icons.arrow_drop_up_rounded,
-                                size: 24,
-                                color: context.moonColors!.chichi),
+                            child: Icon(
+                              MingCute.down_small_fill,
+                              size: 24,
+                              color: context.moonColors!.chichi,
+                            ),
                           ),
                           const SizedBox(width: 4),
                           Text(
@@ -211,15 +198,14 @@ class CustomSliverPersistentHeaderDelegate
             ),
           ),
         ),
-
         Positioned(
           left: 16,
           right: 0,
-          top: 16,
+          top: 32,
           child: Transform.scale(
-            scale: incomeExpensesScale, // Scale dynamically
+            scale: incomeExpensesScale,
             child: Opacity(
-              opacity: incomeExpensesOpacity, // Fading effect
+              opacity: incomeExpensesOpacity,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -270,13 +256,8 @@ class CustomSliverPersistentHeaderDelegate
   }
 
   @override
-  double get maxExtent => 300;
-
-  @override
-  double get minExtent => kToolbarHeight + statusBarHeight;
-
-  @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return true; // Allow rebuilding during scrolling
+    return minExtent != oldDelegate.minExtent ||
+        maxExtent != oldDelegate.maxExtent;
   }
 }

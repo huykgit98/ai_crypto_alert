@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:ai_crypto_alert/features/home/presentation/home/custom_sliver_persistence_header_delegate.dart';
+import 'package:ai_crypto_alert/features/home/presentation/widgets/app_bar/notification_handler.dart';
 import 'package:ai_crypto_alert/features/home/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,6 +21,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   final bool isPremium = false;
   final double premiumCardHeight = kToolbarHeight;
   bool isPremiumCardVisible = true;
+  late double minExtent;
+  late double maxExtent;
 
   @override
   void initState() {
@@ -58,45 +63,53 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   @override
   Widget build(BuildContext context) {
     final statusBarHeight = MediaQuery.of(context).padding.top;
+    minExtent = kToolbarHeight + statusBarHeight;
+    maxExtent = Platform.isAndroid ? 280 : 300;
 
     return Scaffold(
       body: Stack(
         children: [
           _buildGradientBackground(context),
-          CustomScrollView(
+          AppBarScrollHandler(
+            minExtent: minExtent,
+            maxExtent: maxExtent,
             controller: _scrollController,
-            slivers: [
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: CustomSliverPersistentHeaderDelegate(
-                  statusBarHeight: statusBarHeight,
-                ),
-              ),
-              const SliverPadding(
-                padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                sliver: SliverToBoxAdapter(
-                  child: Column(
-                    children: [
-                      SegmentControlWidget(),
-                    ],
+            child: CustomScrollView(
+              controller: _scrollController,
+              slivers: [
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: CustomSliverPersistentHeaderDelegate(
+                    minExtent: minExtent,
+                    maxExtent: maxExtent,
                   ),
                 ),
-              ),
-              if (!isPremium && isPremiumCardVisible)
+                const SliverPadding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  sliver: SliverToBoxAdapter(
+                    child: Column(
+                      children: [
+                        SegmentControlWidget(),
+                      ],
+                    ),
+                  ),
+                ),
+                if (!isPremium && isPremiumCardVisible)
+                  SliverPadding(
+                    padding: EdgeInsets.only(bottom: premiumCardHeight + 8),
+                    sliver: const SliverToBoxAdapter(
+                      child: SizedBox.shrink(),
+                    ),
+                  ),
                 SliverPadding(
-                  padding: EdgeInsets.only(bottom: premiumCardHeight + 8),
+                  padding:
+                      EdgeInsets.only(bottom: kToolbarHeight + statusBarHeight),
                   sliver: const SliverToBoxAdapter(
                     child: SizedBox.shrink(),
                   ),
                 ),
-              SliverPadding(
-                padding:
-                    EdgeInsets.only(bottom: kToolbarHeight + statusBarHeight),
-                sliver: const SliverToBoxAdapter(
-                  child: SizedBox.shrink(),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
           if (!isPremium && isPremiumCardVisible)
             PremiumCard(
