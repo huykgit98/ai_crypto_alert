@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moon_design/moon_design.dart';
 
 class TabContentWidget extends StatelessWidget {
   final List<Map<String, dynamic>> items;
@@ -8,8 +9,16 @@ class TabContentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: 8,
       children: items.map((item) {
-        return ListTile(
+        return MoonMenuItem(
+          backgroundColor: context.moonColors!.goku,
+          height: 60,
+          borderRadius: BorderRadius.circular(16),
+          onTap: () {
+            print('Tapped on ${item['label']}');
+          },
+          label: Text(item['label'] as String),
           leading: Container(
             width: 40,
             height: 40,
@@ -22,14 +31,10 @@ class TabContentWidget extends StatelessWidget {
               color: Colors.orange,
             ),
           ),
-          title: Text(item['label'] as String),
           trailing: Text(
             item['amount'] as String,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          onTap: () {
-            print('Tapped on ${item['label']}');
-          },
         );
       }).toList(),
     );

@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:moon_design/moon_design.dart';
 
 class SegmentControlWidget extends StatefulWidget {
-  const SegmentControlWidget({Key? key}) : super(key: key);
+  const SegmentControlWidget({super.key});
 
   @override
-  _SegmentControlWidgetState createState() => _SegmentControlWidgetState();
+  State<SegmentControlWidget> createState() => _SegmentControlWidgetState();
 }
 
 class _SegmentControlWidgetState extends State<SegmentControlWidget> {
@@ -26,12 +26,12 @@ class _SegmentControlWidgetState extends State<SegmentControlWidget> {
           radius: 80,
           titleStyle: const TextStyle(color: Colors.white, fontSize: 16),
           gradient: const LinearGradient(
-            colors: [Colors.green, Colors.lightGreen],
+            colors: [Colors.green, Colors.yellow],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           badgeWidget: _buildBadge(Icons.receipt_long, Colors.green),
-          badgePositionPercentageOffset: 1.2,
+          badgePositionPercentageOffset: 1.3,
         ),
         PieChartSectionData(
           value: 25,
@@ -39,12 +39,12 @@ class _SegmentControlWidgetState extends State<SegmentControlWidget> {
           radius: 80,
           titleStyle: const TextStyle(color: Colors.white, fontSize: 16),
           gradient: const LinearGradient(
-            colors: [Colors.orange, Colors.deepOrange],
+            colors: [Colors.orange, Colors.deepOrangeAccent],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           badgeWidget: _buildBadge(Icons.restaurant, Colors.orange),
-          badgePositionPercentageOffset: 1.2,
+          badgePositionPercentageOffset: 1.3,
         ),
         PieChartSectionData(
           value: 50,
@@ -57,7 +57,7 @@ class _SegmentControlWidgetState extends State<SegmentControlWidget> {
             end: Alignment.bottomRight,
           ),
           badgeWidget: _buildBadge(Icons.receipt_long, Colors.green),
-          badgePositionPercentageOffset: 1.2,
+          badgePositionPercentageOffset: 1.3,
         ),
       ],
       1: [
@@ -67,12 +67,12 @@ class _SegmentControlWidgetState extends State<SegmentControlWidget> {
           radius: 80,
           titleStyle: const TextStyle(color: Colors.white, fontSize: 16),
           gradient: const LinearGradient(
-            colors: [Colors.blue, Colors.lightBlue],
+            colors: [Colors.blue, Colors.tealAccent],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           badgeWidget: _buildBadge(Icons.shopping_cart, Colors.blue),
-          badgePositionPercentageOffset: 1.2,
+          badgePositionPercentageOffset: 1.3,
         ),
         PieChartSectionData(
           value: 54,
@@ -80,12 +80,12 @@ class _SegmentControlWidgetState extends State<SegmentControlWidget> {
           radius: 80,
           titleStyle: const TextStyle(color: Colors.white, fontSize: 16),
           gradient: const LinearGradient(
-            colors: [Colors.green, Colors.lightGreen],
+            colors: [Colors.green, Colors.indigoAccent],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           badgeWidget: _buildBadge(Icons.attach_money, Colors.green),
-          badgePositionPercentageOffset: 1.2,
+          badgePositionPercentageOffset: 1.3,
         ),
       ],
     },
@@ -97,12 +97,12 @@ class _SegmentControlWidgetState extends State<SegmentControlWidget> {
           radius: 80,
           titleStyle: const TextStyle(color: Colors.white, fontSize: 16),
           gradient: const LinearGradient(
-            colors: [Colors.blue, Colors.lightBlue],
+            colors: [Colors.blue, Colors.indigoAccent],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           badgeWidget: _buildBadge(Icons.home, Colors.blue),
-          badgePositionPercentageOffset: 1.2,
+          badgePositionPercentageOffset: 1.3,
         ),
         PieChartSectionData(
           value: 30,
@@ -110,12 +110,12 @@ class _SegmentControlWidgetState extends State<SegmentControlWidget> {
           radius: 80,
           titleStyle: const TextStyle(color: Colors.white, fontSize: 16),
           gradient: const LinearGradient(
-            colors: [Colors.yellow, Colors.amber],
+            colors: [Colors.yellow, Colors.deepOrangeAccent],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           badgeWidget: _buildBadge(Icons.savings, Colors.yellow),
-          badgePositionPercentageOffset: 1.2,
+          badgePositionPercentageOffset: 1.3,
         ),
       ],
       1: [
@@ -130,7 +130,7 @@ class _SegmentControlWidgetState extends State<SegmentControlWidget> {
             end: Alignment.bottomRight,
           ),
           badgeWidget: _buildBadge(Icons.auto_graph, Colors.red),
-          badgePositionPercentageOffset: 1.2,
+          badgePositionPercentageOffset: 1.3,
         ),
         PieChartSectionData(
           value: 50,
@@ -138,12 +138,12 @@ class _SegmentControlWidgetState extends State<SegmentControlWidget> {
           radius: 80,
           titleStyle: const TextStyle(color: Colors.white, fontSize: 16),
           gradient: const LinearGradient(
-            colors: [Colors.blue, Colors.lightBlue],
+            colors: [Colors.blue, Colors.indigoAccent],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           badgeWidget: _buildBadge(Icons.wallet, Colors.blue),
-          badgePositionPercentageOffset: 1.2,
+          badgePositionPercentageOffset: 1.3,
         ),
       ],
     },
@@ -156,7 +156,7 @@ class _SegmentControlWidgetState extends State<SegmentControlWidget> {
         {
           'icon': Icons.shopping_cart,
           'label': 'Chợ, siêu thị',
-          'amount': '238.900đ'
+          'amount': '238.900đ',
         },
       ],
       1: [
@@ -164,7 +164,7 @@ class _SegmentControlWidgetState extends State<SegmentControlWidget> {
         {
           'icon': Icons.shopping_bag,
           'label': 'Chi tiêu - sinh hoạt',
-          'amount': '767.400đ'
+          'amount': '767.400đ',
         },
       ],
     },
@@ -185,7 +185,7 @@ class _SegmentControlWidgetState extends State<SegmentControlWidget> {
       width: 30,
       height: 30,
       decoration: BoxDecoration(
-        color: color.withOpacity(0.2),
+        color: color.withValues(alpha: 0.2),
         shape: BoxShape.circle,
       ),
       child: Icon(
@@ -199,6 +199,7 @@ class _SegmentControlWidgetState extends State<SegmentControlWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      spacing: 16,
       children: [
         CustomSlidingSegmentedControl<int>(
           fromMax: true,
@@ -236,11 +237,12 @@ class _SegmentControlWidgetState extends State<SegmentControlWidget> {
             });
           },
         ),
-        const SizedBox(height: 60),
-        PieChartWidget(
-          sections: chartData[selectedSegment]?[selectedTab] ?? [],
+        Padding(
+          padding: const EdgeInsets.all(60),
+          child: PieChartWidget(
+            sections: chartData[selectedSegment]?[selectedTab] ?? [],
+          ),
         ),
-        const SizedBox(height: 60),
         TabSwitcherWidget(
           selectedTab: selectedTab,
           onTabSelected: (int value) {
@@ -250,7 +252,6 @@ class _SegmentControlWidgetState extends State<SegmentControlWidget> {
             });
           },
         ),
-        const SizedBox(height: 32),
         TabContentWidget(
           items: tabContentData[selectedSegment]?[selectedTab] ?? [],
         ),

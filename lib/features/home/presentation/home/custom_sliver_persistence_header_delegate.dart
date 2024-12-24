@@ -35,6 +35,10 @@ class CustomSliverPersistentHeaderDelegate
     final totalBalanceTop = ui.lerpDouble(statusBarHeight + 60, 48, t) ?? 8;
     final totalBalanceLeft = ui.lerpDouble(48, 32, t) ?? 24;
 
+    // Dynamically interpolate position and scaling for Account info
+    final accountInfoTop = ui.lerpDouble(statusBarHeight + 60, 48, t) ?? 8;
+    final accountInfoRight = ui.lerpDouble(48, 32, t) ?? 24;
+
     return Stack(
       fit: StackFit.expand,
       children: [
@@ -57,8 +61,9 @@ class CustomSliverPersistentHeaderDelegate
           left: horizontalPadding,
           right: horizontalPadding,
           bottom: 0, // Stick to the bottom of the header
-          child: AnimatedContainer(
-            duration: Duration.zero, // Instant update
+          child: Container(
+            // duration: Duration.zero, // Instant update
+
             height: currentHeight,
             decoration: BoxDecoration(
               color: context.moonColors!.goku,
@@ -88,6 +93,32 @@ class CustomSliverPersistentHeaderDelegate
                 style: TextStyle(
                   fontSize: ui.lerpDouble(20, 18, t),
                   color: context.moonColors!.textPrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // Account Info with dynamic position and scale
+        Positioned(
+          right: accountInfoRight,
+          bottom: accountInfoTop,
+          child: Row(
+            children: [
+              Icon(
+                MingCute.wallet_5_fill,
+                size: ui.lerpDouble(24, 20, t),
+                color: context.moonColors!.textSecondary,
+              ),
+              const SizedBox(
+                width: 4,
+              ),
+              Text(
+                'All Accounts',
+                style: TextStyle(
+                  fontSize: ui.lerpDouble(14, 14, t),
+                  color: context.moonColors!.textSecondary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -182,9 +213,9 @@ class CustomSliverPersistentHeaderDelegate
         ),
 
         Positioned(
-          left: 24,
+          left: 16,
           right: 0,
-          top: 32,
+          top: 16,
           child: Transform.scale(
             scale: incomeExpensesScale, // Scale dynamically
             child: Opacity(
@@ -195,17 +226,29 @@ class CustomSliverPersistentHeaderDelegate
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Welcome back!',
-                        style: context.moonTypography?.body.text16.copyWith(
-                          color: context.moonColors!.goten,
-                        ),
-                      ),
-                      Text(
-                        'Negan',
-                        style: context.moonTypography?.body.text24.copyWith(
-                          color: context.moonColors!.goten,
-                          fontWeight: FontWeight.bold,
+                      Text.rich(
+                        TextSpan(
+                          text: 'Good morning, ',
+                          style: context.moonTypography?.body.text18.copyWith(
+                            color: context.moonColors!.goten,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: 'Negan',
+                              style:
+                                  context.moonTypography?.body.text18.copyWith(
+                                color: context.moonColors!.goten,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            TextSpan(
+                              text: '!',
+                              style:
+                                  context.moonTypography?.body.text18.copyWith(
+                                color: context.moonColors!.goten,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -227,7 +270,7 @@ class CustomSliverPersistentHeaderDelegate
   }
 
   @override
-  double get maxExtent => 350;
+  double get maxExtent => 300;
 
   @override
   double get minExtent => kToolbarHeight + statusBarHeight;

@@ -2,9 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class PieChartWidget extends StatelessWidget {
+  const PieChartWidget({required this.sections, super.key});
   final List<PieChartSectionData> sections;
-
-  const PieChartWidget({required this.sections, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

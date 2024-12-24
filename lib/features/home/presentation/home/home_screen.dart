@@ -82,14 +82,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   ),
                 ),
               ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) => const ListTile(
-                    title: Text('Item \$index'),
-                  ),
-                  childCount: 20,
-                ),
-              ),
               if (!isPremium && isPremiumCardVisible)
                 SliverPadding(
                   padding: EdgeInsets.only(bottom: premiumCardHeight + 8),
@@ -97,6 +89,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                     child: SizedBox.shrink(),
                   ),
                 ),
+              SliverPadding(
+                padding:
+                    EdgeInsets.only(bottom: kToolbarHeight + statusBarHeight),
+                sliver: const SliverToBoxAdapter(
+                  child: SizedBox.shrink(),
+                ),
+              ),
             ],
           ),
           if (!isPremium && isPremiumCardVisible)
